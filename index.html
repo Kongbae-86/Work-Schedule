@@ -374,7 +374,6 @@ function renderCurrentTab() {
 
     <!-- Action bar -->
     <div class="action-bar">
-      <button class="btn btn-primary btn-sm" onclick="addRowPrompt('${p.periodId}')">+ Add Row</button>
       <button class="btn btn-arl btn-sm" onclick="generateText('${p.periodId}')">📋 ARL-245 Text</button>
     </div>
 
@@ -409,6 +408,9 @@ function renderPastTab() {
         </div>
         <button class="btn btn-arl btn-sm"
           onclick="event.stopPropagation();generateText('${p.periodId}')">📋 ARL-245</button>
+        <button class="btn btn-danger btn-sm"
+          onclick="event.stopPropagation();deletePeriod('${p.periodId}','${p.label}')"
+          title="Delete this period">🗑</button>
         <span class="pp-chevron">▼</span>
       </div>
       <div class="past-period-body" id="ppb-${p.periodId}">
@@ -461,7 +463,7 @@ function renderRow(row, periodId, editable) {
 
   if (editable) {
     return `<tr class="${rowClass}" data-rowid="${rowId}">
-      <td><strong>${row.date}</strong></td>
+      <td><strong>${cleanDate(row.date)}</strong></td>
       <td style="color:var(--ink-4);font-size:0.76rem;">${row.dayLabel}</td>
       <td><select class="cell-edit" onchange="updateField('${rowId}','leaveType',this.value,this)">${ltOpts}</select></td>
       <td><input class="cell-edit time-input" value="${padTime(row.start)}" placeholder="05:35"
@@ -479,7 +481,7 @@ function renderRow(row, periodId, editable) {
     </tr>`;
   } else {
     return `<tr class="${rowClass}">
-      <td>${row.date}</td>
+      <td>${cleanDate(row.date)}</td>
       <td style="color:var(--ink-4);font-size:0.76rem;">${row.dayLabel}</td>
       <td style="font-size:0.74rem;color:var(--ink-3);">${lt}</td>
       <td style="font-family:'DM Mono',monospace;">${padTime(row.start)}</td>
@@ -597,6 +599,15 @@ async function submitNewPeriod() {
   switchTab('current');
 }
 
+// ── DELETE PERIOD ────────────────────────────────────────────
+async function deletePeriod(periodId, label) {
+  if (!confirm('Delete period "' + label + '"?\nThis cannot be undone.')) return;
+  const res = await gasPost('deletePeriod', { periodId });
+  if (res.error) { showToast(res.error, 'error'); return; }
+  showToast('Period deleted', 'success');
+  loadAll();
+}
+
 // ── ADD / DELETE ROW ─────────────────────────────────────────
 function addRowPrompt(periodId) {
   const dateStr = prompt('Date (e.g. "May 19"):');
@@ -711,6 +722,24 @@ function parseTimeMins(str) {
   const parts = clean.split(':');
   if (parts.length !== 2) return 0;
   return (neg ? -1 : 1) * (parseInt(parts[0]) * 60 + parseInt(parts[1]));
+}
+
+function cleanDate(str) {
+  if (!str) return '';
+  const s = str.toString().trim();
+  // Handle full JS Date string from Sheets e.g. "Mon May 04 2026 00:00:00 GMT-0400..."
+  const m = s.match(/([A-Za-z]+)\s+(\d{1,2})\s+\d{4}/);
+  if (m) {
+    const months = {Jan:'Jan',Feb:'Feb',Mar:'Mar',Apr:'Apr',May:'May',Jun:'Jun',
+                    Jul:'Jul',Aug:'Aug',Sep:'Sep',Oct:'Oct',Nov:'Nov',Dec:'Dec'};
+    const mon = months[m[1]] || m[1];
+    const day = m[2].padStart(2,'0');
+    return mon + ' ' + day;
+  }
+  // Already clean like "May 4" — pad the day
+  const m2 = s.match(/^([A-Za-z]+)\s+(\d{1,2})$/);
+  if (m2) return m2[1] + ' ' + m2[2].padStart(2,'0');
+  return s;
 }
 
 function padTime(str) {
