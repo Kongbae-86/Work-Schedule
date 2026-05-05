@@ -444,12 +444,12 @@ function renderPeriodFull(period, editable) {
       </div>
       <div class="summary-card card-earned">
         <div class="card-label">⊕ Earned</div>
-        <div class="card-value">${period.earned}</div>
+        <div class="card-value" id="card-earned-val">${period.earned}</div>
         <div class="card-sub">Credit earned this period</div>
       </div>
       <div class="summary-card card-ending">
         <div class="card-label">⇢ Ending</div>
-        <div class="card-value">${period.ending}</div>
+        <div class="card-value" id="card-ending-val">${period.ending}</div>
         <div class="card-sub">= carry-over + earned · max 24:00</div>
       </div>
     </div>
@@ -508,8 +508,10 @@ function renderRow(row, periodId, editable) {
   const crCls   = crMins  > 0 ? 'credit-pos' : 'credit-zero';
   const netPfx  = netMins > 0 ? '+' : '';
 
-  const ltOpts = ['','Regular','Annual Leave','Sick Leave','Credit Hours Taken','Holiday','Other']
-    .map(o => `<option value="${o}" ${lt===o?'selected':''}>${o||'—'}</option>`).join('');
+  // Default to Regular if no leave type set
+  const effectiveLt = lt || 'Regular';
+  const ltOpts = ['Regular','Annual Leave','Sick Leave','Credit Hours Taken','Holiday','Other']
+    .map(o => `<option value="${o}" ${effectiveLt===o?'selected':''}>${o}</option>`).join('');
 
   if (editable) {
     return `<tr class="${rowClass}" data-rowid="${rowId}">
@@ -518,7 +520,7 @@ function renderRow(row, periodId, editable) {
       <td><select class="cell-edit" onchange="updateField('${rowId}','leaveType',this.value)">${ltOpts}</select></td>
       <td><input class="cell-edit time-input" value="${esc(row.start)}" placeholder="5:35"
             onblur="updateField('${rowId}','start',this.value)"></td>
-      <td><input class="cell-edit time-input" value="${esc(row.end)}" placeholder="15:05" 
+      <td><input class="cell-edit time-input" value="${padTime(esc(row.end))}" placeholder="15:05" 
             onblur="updateField('${rowId}','end',this.value)"></td>
       <td><input class="cell-edit adj-input" value="${esc(row.adjustment)}" placeholder="±0:00"
             onblur="updateField('${rowId}','adjustment',this.value)"></td>
@@ -546,17 +548,63 @@ function renderRow(row, periodId, editable) {
 }
 
 // ============================================================
-// UPDATE FIELD
+// UPDATE FIELD — updates sheet but does NOT re-render the table
 // ============================================================
 async function updateField(rowId, field, value) {
   try {
     const res = await gasPost('updateRow', { rowId, [field]: value });
     if (res.error) { showToast(res.error, 'error'); return; }
-    const r = await gasPost('getAllPeriods', {});
-    allPeriods = r.periods || [];
-    if (activeTab === 'current') renderCurrentTab();
-    else renderPastTab();
+    // Only update the computed display cells (workHour, credit, net) for this row
+    // without re-rendering the whole table — preserves focus and scroll position
+    const refreshRes = await gasPost('getAllPeriods', {});
+    allPeriods = refreshRes.periods || [];
+    updateRowDisplayOnly(rowId);
   } catch(e) { showToast('Update failed: ' + e.message, 'error'); }
+}
+
+// Update only the computed display cells for one row without re-rendering
+function updateRowDisplayOnly(rowId) {
+  // Find the row data in allPeriods
+  let foundRow = null;
+  for (const p of allPeriods) {
+    const r = (p.rows || []).find(r => {
+      const rid = p.periodId + '|' + r.date + '|' + r.rowType;
+      return rid === rowId;
+    });
+    if (r) { foundRow = r; break; }
+  }
+  if (!foundRow) return;
+
+  // Update work hour, credit, net cells by finding the tr
+  const tr = document.querySelector(`tr[data-rowid="${CSS.escape(rowId)}"]`);
+  if (!tr) return;
+
+  const cells = tr.querySelectorAll('td');
+  // col indices: 0=date,1=day,2=type,3=start,4=end,5=adj,6=workhr,7=credit,8=net,9=note,10=del
+  const crMins  = parseTimeMins(foundRow.credit);
+  const netMins = parseTimeMins(foundRow.netCredit);
+  const crCls   = crMins  > 0 ? 'credit-pos' : 'credit-zero';
+  const netCls  = netMins > 0 ? 'credit-pos' : netMins < 0 ? 'credit-neg' : 'credit-zero';
+  const netPfx  = netMins > 0 ? '+' : '';
+
+  if (cells[6]) cells[6].innerHTML = `<span class="work-display">${foundRow.workHour||'—'}</span>`;
+  if (cells[7]) cells[7].innerHTML = `<span class="credit-badge ${crCls}">${crMins>0?'+':''}${foundRow.credit||'0:00'}</span>`;
+  if (cells[8]) cells[8].innerHTML = `<span class="credit-badge ${netCls}">${netPfx}${foundRow.netCredit||'0:00'}</span>`;
+
+  // Also update the summary cards
+  updateSummaryCards();
+}
+
+// Refresh only the three summary cards
+function updateSummaryCards() {
+  if (!allPeriods || allPeriods.length === 0) return;
+  const p = allPeriods[0];
+  const cv = document.getElementById('card-carryover-val');
+  const ev = document.getElementById('card-earned-val');
+  const ev2 = document.getElementById('card-ending-val');
+  if (cv)  cv.textContent  = p.carryOver;
+  if (ev)  ev.textContent  = p.earned;
+  if (ev2) ev2.textContent = p.ending;
 }
 
 // ============================================================
@@ -685,6 +733,14 @@ async function gasPost(action, payload) {
 // ============================================================
 // UTILITIES
 // ============================================================
+function padTime(str) {
+  // Ensure "5:35" becomes "05:35" for display
+  if (!str) return '';
+  const s = str.toString().trim();
+  if (s.match(/^\d:\d{2}$/)) return '0' + s;
+  return s;
+}
+
 function shortDay(str) {
   if (!str) return '';
   // "Week 1, Mon" → "W1, Mon"  or "W1, Mon" → "W1, Mon"
@@ -694,11 +750,10 @@ function shortDay(str) {
 function cleanDate(str) {
   if (!str) return '';
   const s = str.toString().trim();
-  // If it looks like a full Date string e.g. "Fri Nov 20 2026 00:00:00..."
-  // extract just "Nov 20"
+  // Handle full JS Date string: "Fri Nov 20 2026 00:00:00 GMT-0500..."
   const m = s.match(/([A-Za-z]+)\s+(\d{1,2})\s+\d{4}/);
   if (m) return m[1] + ' ' + m[2];
-  // Already clean like "May 4"
+  // Already clean like "May 4" or "Nov 17"
   return s;
 }
 
