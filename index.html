@@ -536,8 +536,8 @@ function renderRow(row, periodId, editable) {
       <td>${cleanDate(row.date)}</td>
       <td style="color:var(--ink-4);font-size:0.76rem;">${shortDay(row.dayLabel)}</td>
       <td style="font-size:0.74rem;color:var(--ink-3);">${lt||'—'}</td>
-      <td style="font-family:'DM Mono',monospace;">${row.start||''}</td>
-      <td style="font-family:'DM Mono',monospace;">${row.end||''}</td>
+      <td style="font-family:'DM Mono',monospace;">${padTime(row.start)}</td>
+      <td style="font-family:'DM Mono',monospace;">${padTime(row.end)}</td>
       <td style="font-family:'DM Mono',monospace;">${row.adjustment||''}</td>
       <td><span class="work-display">${row.workHour||'—'}</span></td>
       <td><span class="credit-badge ${crCls}">${crMins>0?'+':''}${row.credit||'0:00'}</span></td>
@@ -734,10 +734,19 @@ async function gasPost(action, payload) {
 // UTILITIES
 // ============================================================
 function padTime(str) {
-  // Ensure "5:35" becomes "05:35" for display
   if (!str) return '';
   const s = str.toString().trim();
+  // If it looks like a full date string (Sheets converted it), extract HH:MM
+  // e.g. "Sat Dec 30 1899 05:35:00 GMT-0500"
+  const dateMatch = s.match(/(\d{1,2}):(\d{2}):(\d{2})\s+GMT/);
+  if (dateMatch) {
+    const h = parseInt(dateMatch[1]);
+    const m = dateMatch[2];
+    return (h < 10 ? '0' : '') + h + ':' + m;
+  }
+  // Pad single-digit hour: "5:35" → "05:35"
   if (s.match(/^\d:\d{2}$/)) return '0' + s;
+  // Already correct format
   return s;
 }
 
