@@ -204,11 +204,12 @@ select.cell-edit{cursor:pointer;appearance:none;background:transparent url("data
 <div class="modal-overlay" id="new-period-modal">
   <div class="modal">
     <div class="modal-title">New Pay Period</div>
-    <div class="modal-sub">Enter the Monday start date for the new period (e.g. "May 4" or "May 4, 2026")</div>
+    <div class="modal-sub">Enter the Monday start date. The period runs Mon–Fri for two weeks (ends on the Friday 11 days later).</div>
     <input class="modal-input" type="text" id="new-period-input"
-           placeholder="May 4"
+           placeholder="MM/DD/YYYY" maxlength="10"
+           oninput="formatDateInput(this);previewNewPeriod()"
            onkeydown="if(event.key==='Enter') submitNewPeriod()">
-    <div id="new-period-preview" style="font-size:0.78rem;color:var(--ink-3);margin-bottom:16px;min-height:20px;font-family:'DM Mono',monospace;"></div>
+    <div id="new-period-preview" style="font-size:0.88rem;font-weight:600;color:var(--orange);margin-bottom:16px;min-height:22px;font-family:'Lora',serif;"></div>
     <div style="display:flex;gap:8px;justify-content:flex-end;">
       <button class="btn btn-secondary btn-sm" onclick="closeNewPeriodModal()">Cancel</button>
       <button class="btn btn-primary btn-sm" onclick="submitNewPeriod()">✓ Create Period</button>
@@ -495,61 +496,63 @@ function renderRow(row, periodId, editable) {
   }
 }
 
-// ── UPDATE FIELD (no table re-render) ──────────────────────────
+// ── UPDATE FIELD — fully in-place, no reload, no flicker ────────
 async function updateField(rowId, field, value, selectEl) {
   try {
     const res = await gasPost('updateRow', { rowId, [field]: value });
     if (res.error) { showToast(res.error, 'error'); return; }
 
-    // Update only computed cells in this row
     const id = safeId(rowId);
-    const wh = document.getElementById('wh-' + id);
-    const cr = document.getElementById('cr-' + id);
-    const nc = document.getElementById('nc-' + id);
 
+    // Update work hour cell
+    const wh = document.getElementById('wh-' + id);
     if (wh) wh.textContent = res.workHour || '—';
 
-    const crMins  = parseTimeMins(res.credit);
-    const netMins = parseTimeMins(res.netCredit);
+    // Update credit cell
+    const crMins = parseTimeMins(res.credit);
+    const cr = document.getElementById('cr-' + id);
     if (cr) {
       cr.textContent = (crMins > 0 ? '+' : '') + (res.credit || '0:00');
       cr.className   = 'credit-badge ' + (crMins > 0 ? 'credit-pos' : 'credit-zero');
     }
+
+    // Update net credit cell
+    const netMins = parseTimeMins(res.netCredit);
+    const nc = document.getElementById('nc-' + id);
     if (nc) {
       nc.textContent = (netMins > 0 ? '+' : '') + (res.netCredit || '0:00');
       nc.className   = 'credit-badge ' + (netMins > 0 ? 'credit-pos' : netMins < 0 ? 'credit-neg' : 'credit-zero');
     }
 
-    // Update row background for leave type change
+    // Update row background when leave type changes
     if (field === 'leaveType' && selectEl) {
       const tr = selectEl.closest('tr');
       if (tr) {
         tr.className = '';
-        if (value === 'Holiday') tr.className = 'row-holiday';
+        if (value === 'Holiday')              tr.className = 'row-holiday';
         else if (value === 'Credit Hours Taken') tr.className = 'row-credit-taken';
         else if (value !== 'Regular' && value !== '') tr.className = 'row-leave';
       }
     }
 
-    // Refresh summary cards only
-    await refreshCards();
+    // Update summary cards using the recomputed totals returned from server
+    updateCardsFromResponse(res);
+
   } catch(e) { showToast('Update failed: ' + e.message, 'error'); }
 }
 
-async function refreshCards() {
-  try {
-    const res  = await gasPost('getAllPeriods', {});
-    allPeriods = res.periods || [];
-    if (allPeriods.length > 0) {
-      const p = allPeriods[0];
-      const cv  = document.getElementById('card-carryover-val');
-      const ev  = document.getElementById('card-earned-val');
-      const ev2 = document.getElementById('card-ending-val');
-      if (cv)  cv.textContent  = p.carryOver;
-      if (ev)  ev.textContent  = p.earned;
-      if (ev2) ev2.textContent = p.ending;
-    }
-  } catch(e) {}
+// Update cards from server response (no extra fetch needed)
+function updateCardsFromResponse(res) {
+  // res contains { workHour, credit, netCredit, earned, ending, carryOver }
+  // earned/ending are returned by updateRow so we can update cards without refetch
+  if (res.earned !== undefined) {
+    const ev = document.getElementById('card-earned-val');
+    if (ev) ev.textContent = res.earned;
+  }
+  if (res.ending !== undefined) {
+    const ev2 = document.getElementById('card-ending-val');
+    if (ev2) ev2.textContent = res.ending;
+  }
 }
 
 // ── NEW PERIOD MODAL ─────────────────────────────────────────
@@ -564,38 +567,32 @@ function closeNewPeriodModal() {
   document.getElementById('new-period-modal').classList.remove('open');
 }
 
-// Live preview: "Pay Period (May 4 – May 17)"
-document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('new-period-input').addEventListener('input', function() {
-    const val = this.value.trim();
-    const prev = document.getElementById('new-period-preview');
-    if (!val) { prev.textContent = ''; return; }
-    // Try to compute end date client-side
-    const d = parseClientDate(val);
-    if (d) {
-      const end = new Date(d.getTime() + 13 * 86400000);
-      prev.textContent = 'Pay Period (' + fmtDate(d) + ' – ' + fmtDate(end) + ')';
-      prev.style.color = 'var(--orange)';
-    } else {
-      prev.textContent = 'Enter a date like "May 4"';
-      prev.style.color = 'var(--ink-4)';
-    }
-  });
-});
+// Preview is handled by inline oninput="previewNewPeriod()" on the input element
 
 async function submitNewPeriod() {
   const val = document.getElementById('new-period-input').value.trim();
   if (!val) { showToast('Please enter a start date', 'error'); return; }
 
+  const d = parseMMDDYYYY(val);
+  if (!d || isNaN(d.getTime())) {
+    showToast('Invalid date — use MM/DD/YYYY', 'error'); return;
+  }
+
+  // Warn if not Monday
+  if (d.getDay() !== 1) {
+    if (!confirm(fmtDate(d) + ' is a ' + ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d.getDay()] +
+                 '.\nPay periods should start on Monday. Continue anyway?')) return;
+  }
+
   closeNewPeriodModal();
   showToast('Creating period…');
 
+  // Pass as MM/DD/YYYY — GAS parseDateInput handles it
   const res = await gasPost('createNewPeriod', { startDateStr: val });
   if (res.error) { showToast(res.error, 'error'); return; }
 
   showToast('Created: ' + res.label, 'success');
   await loadAll();
-  // New period is now current — switch to current tab
   switchTab('current');
 }
 
@@ -768,20 +765,52 @@ function showToast(msg, type='') {
   setTimeout(() => t.classList.remove('show'), 2800);
 }
 
-// Client-side date parsing for live preview
-function parseClientDate(str) {
-  const MONTHS = {jan:0,feb:1,mar:2,apr:3,may:4,jun:5,jul:6,aug:7,sep:8,oct:9,nov:10,dec:11};
-  const m = str.match(/([A-Za-z]+)\s+(\d{1,2})/);
+// ── DATE INPUT HELPERS ──────────────────────────────────────
+
+// Auto-insert slashes as user types MM/DD/YYYY
+function formatDateInput(input) {
+  let v = input.value.replace(/\D/g, '').slice(0, 8);
+  if (v.length >= 3) v = v.slice(0,2) + '/' + v.slice(2);
+  if (v.length >= 6) v = v.slice(0,5) + '/' + v.slice(5);
+  input.value = v;
+}
+
+// Parse MM/DD/YYYY → Date
+function parseMMDDYYYY(str) {
+  const m = str.trim().match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
   if (!m) return null;
-  const mon = MONTHS[m[1].toLowerCase()];
-  const day = parseInt(m[2]);
-  if (mon === undefined || isNaN(day)) return null;
-  return new Date(new Date().getFullYear(), mon, day);
+  const month = parseInt(m[1]) - 1;
+  const day   = parseInt(m[2]);
+  const year  = parseInt(m[3]);
+  if (month < 0 || month > 11 || day < 1 || day > 31) return null;
+  return new Date(year, month, day);
+}
+
+// Live preview shown below the input
+function previewNewPeriod() {
+  const val  = document.getElementById('new-period-input').value.trim();
+  const prev = document.getElementById('new-period-preview');
+  if (val.length < 10) { prev.textContent = ''; return; }
+  const d = parseMMDDYYYY(val);
+  if (!d || isNaN(d.getTime())) {
+    prev.textContent = 'Invalid date';
+    prev.style.color = 'var(--red)';
+    return;
+  }
+  // End date is 11 days later (Mon → Fri of week 2)
+  const end = new Date(d.getTime() + 11 * 86400000);
+  prev.textContent = fmtDate(d) + ' – ' + fmtDate(end) + ', ' + end.getFullYear();
+  prev.style.color = 'var(--orange)';
 }
 
 function fmtDate(d) {
   const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   return months[d.getMonth()] + ' ' + d.getDate();
+}
+
+// Client-side date parsing (kept for fallback)
+function parseClientDate(str) {
+  return parseMMDDYYYY(str);
 }
 </script>
 </body>
