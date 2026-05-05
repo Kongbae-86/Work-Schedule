@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -9,43 +9,40 @@
 <title>Work Schedule</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-
 <style>
 /* ============================================================
-   DESIGN SYSTEM — Warm Paper + Anthropic Orange
+   DESIGN SYSTEM — Warm Paper + Anthropic Orange  (v1.1)
    ============================================================ */
 :root {
-  --paper: #faf7f2;
-  --paper-2: #f5f0e8;
-  --paper-3: #ede6d8;
-  --paper-4: #e2d9c8;
-  --ink: #1a1714;
-  --ink-2: #3d3730;
-  --ink-3: #6b6157;
-  --ink-4: #9e9389;
-  --orange: #d4570a;
-  --orange-2: #e8691a;
+  --paper:        #faf7f2;
+  --paper-2:      #f5f0e8;
+  --paper-3:      #ede6d8;
+  --paper-4:      #e2d9c8;
+  --ink:          #1a1714;
+  --ink-2:        #3d3730;
+  --ink-3:        #6b6157;
+  --ink-4:        #9e9389;
+  --orange:       #d4570a;
+  --orange-2:     #e8691a;
   --orange-light: #fde8d8;
-  --orange-mid: #f5c4a0;
-  --green: #2d6a4f;
-  --green-light: #d8f0e5;
-  --red: #b91c1c;
-  --red-light: #fde8e8;
-  --blue: #1d4e89;
-  --blue-light: #dbeafe;
-  --amber: #92400e;
-  --amber-light: #fef3c7;
-  --border: #d6cdc0;
-  --border-2: #e8e0d4;
-  --shadow-sm: 0 1px 3px rgba(26,23,20,0.08);
-  --shadow: 0 2px 8px rgba(26,23,20,0.10);
-  --shadow-lg: 0 4px 20px rgba(26,23,20,0.12);
-  --radius: 10px;
-  --radius-sm: 6px;
+  --orange-mid:   #f5c4a0;
+  --green:        #2d6a4f;
+  --green-light:  #d8f0e5;
+  --red:          #b91c1c;
+  --red-light:    #fde8e8;
+  --blue:         #1d4e89;
+  --blue-light:   #dbeafe;
+  --amber:        #92400e;
+  --amber-light:  #fef3c7;
+  --border:       #d6cdc0;
+  --border-2:     #e8e0d4;
+  --shadow-sm:    0 1px 3px rgba(26,23,20,0.08);
+  --shadow:       0 2px 8px rgba(26,23,20,0.10);
+  --shadow-lg:    0 4px 20px rgba(26,23,20,0.12);
+  --radius:       10px;
+  --radius-sm:    6px;
 }
-
 * { box-sizing: border-box; margin: 0; padding: 0; }
-
 body {
   font-family: 'DM Sans', sans-serif;
   background: var(--paper);
@@ -54,427 +51,214 @@ body {
   font-size: 14px;
   line-height: 1.5;
 }
-
-/* Subtle paper texture overlay */
 body::before {
   content: '';
-  position: fixed;
-  inset: 0;
+  position: fixed; inset: 0;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 0;
+  pointer-events: none; z-index: 0;
 }
 
-/* ============================================================ HEADER */
+/* ── HEADER ─────────────────────────────────────────────── */
 .app-header {
   background: var(--paper-2);
   border-bottom: 1.5px solid var(--border);
   padding: 0 20px;
-  position: sticky;
-  top: 0;
-  z-index: 100;
+  position: sticky; top: 0; z-index: 100;
   box-shadow: var(--shadow-sm);
 }
 .header-inner {
-  max-width: 1100px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  height: 56px;
+  max-width: 1100px; margin: 0 auto;
+  display: flex; align-items: center; gap: 16px; height: 56px;
 }
 .app-logo {
-  font-family: 'Lora', serif;
-  font-size: 1.15rem;
-  font-weight: 600;
-  color: var(--ink);
-  letter-spacing: -0.02em;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  font-family: 'Lora', serif; font-size: 1.15rem; font-weight: 600;
+  color: var(--ink); letter-spacing: -0.02em;
+  display: flex; align-items: center; gap: 8px;
 }
-.app-logo .dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: var(--orange);
-}
+.app-logo .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--orange); }
 .header-tabs {
-  display: flex;
-  gap: 2px;
-  margin-left: auto;
-  background: var(--paper-3);
-  border-radius: 8px;
-  padding: 3px;
+  display: flex; gap: 2px; margin-left: auto;
+  background: var(--paper-3); border-radius: 8px; padding: 3px;
 }
 .htab {
-  padding: 5px 16px;
-  border-radius: 6px;
-  font-size: 0.82rem;
-  font-weight: 500;
-  cursor: pointer;
-  border: none;
-  background: transparent;
-  color: var(--ink-3);
-  transition: all 0.15s;
-  white-space: nowrap;
+  padding: 5px 16px; border-radius: 6px; font-size: 0.82rem; font-weight: 500;
+  cursor: pointer; border: none; background: transparent;
+  color: var(--ink-3); transition: all 0.15s; white-space: nowrap;
 }
-.htab.active {
-  background: var(--paper);
-  color: var(--ink);
-  box-shadow: var(--shadow-sm);
-}
+.htab.active { background: var(--paper); color: var(--ink); box-shadow: var(--shadow-sm); }
 .htab:hover:not(.active) { color: var(--ink); background: var(--paper-4); }
 
-/* ============================================================ MAIN LAYOUT */
+/* ── LAYOUT ─────────────────────────────────────────────── */
 .main {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 24px 20px 60px;
-  position: relative;
-  z-index: 1;
+  max-width: 1100px; margin: 0 auto;
+  padding: 24px 20px 60px; position: relative; z-index: 1;
 }
 
-/* ============================================================ PERIOD SUMMARY CARD */
+/* ── SUMMARY CARD ────────────────────────────────────────── */
 .summary-card {
-  background: var(--paper-2);
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius);
-  padding: 18px 20px;
-  margin-bottom: 20px;
-  box-shadow: var(--shadow-sm);
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  align-items: center;
+  background: var(--paper-2); border: 1.5px solid var(--border);
+  border-radius: var(--radius); padding: 18px 20px; margin-bottom: 20px;
+  box-shadow: var(--shadow-sm); display: flex; flex-wrap: wrap;
+  gap: 12px; align-items: center;
 }
 .period-title {
-  font-family: 'Lora', serif;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--ink);
-  flex: 1;
-  min-width: 180px;
+  font-family: 'Lora', serif; font-size: 1.1rem; font-weight: 600;
+  color: var(--ink); flex: 1; min-width: 180px;
 }
-.summary-pills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
+.summary-pills { display: flex; flex-wrap: wrap; gap: 8px; }
 .spill {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: var(--paper);
-  border: 1px solid var(--border-2);
-  border-radius: 8px;
-  padding: 6px 12px;
-  min-width: 80px;
+  display: flex; flex-direction: column; align-items: center;
+  background: var(--paper); border: 1px solid var(--border-2);
+  border-radius: 8px; padding: 6px 12px; min-width: 80px;
 }
 .spill-label { font-size: 0.65rem; color: var(--ink-4); text-transform: uppercase; letter-spacing: 0.05em; }
 .spill-value { font-family: 'DM Mono', monospace; font-size: 0.95rem; font-weight: 500; color: var(--ink); margin-top: 2px; }
 .spill-value.orange { color: var(--orange); }
-.spill-value.green { color: var(--green); }
-.spill-value.red { color: var(--red); }
-.spill-value.blue { color: var(--blue); }
+.spill-value.green  { color: var(--green); }
+.spill-value.blue   { color: var(--blue); }
 .spill-value.purple { color: #7c3aed; }
 
-/* ============================================================ ACTION BUTTONS */
-.action-bar {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-bottom: 16px;
-  align-items: center;
-}
+/* ── BUTTONS ─────────────────────────────────────────────── */
+.action-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; align-items: center; }
 .btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 7px 14px;
-  border-radius: var(--radius-sm);
-  font-size: 0.82rem;
-  font-weight: 500;
-  cursor: pointer;
-  border: 1.5px solid transparent;
-  transition: all 0.15s;
-  font-family: 'DM Sans', sans-serif;
-  white-space: nowrap;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 14px; border-radius: var(--radius-sm);
+  font-size: 0.82rem; font-weight: 500; cursor: pointer;
+  border: 1.5px solid transparent; transition: all 0.15s;
+  font-family: 'DM Sans', sans-serif; white-space: nowrap;
 }
-.btn-primary {
-  background: var(--orange);
-  color: white;
-  border-color: var(--orange);
-}
+.btn-primary  { background: var(--orange); color: white; border-color: var(--orange); }
 .btn-primary:hover { background: var(--orange-2); border-color: var(--orange-2); }
-.btn-secondary {
-  background: var(--paper);
-  color: var(--ink-2);
-  border-color: var(--border);
-}
-.btn-secondary:hover { background: var(--paper-3); border-color: var(--border); }
-.btn-ghost {
-  background: transparent;
-  color: var(--ink-3);
-  border-color: var(--border-2);
-}
+.btn-secondary { background: var(--paper); color: var(--ink-2); border-color: var(--border); }
+.btn-secondary:hover { background: var(--paper-3); }
+.btn-ghost  { background: transparent; color: var(--ink-3); border-color: var(--border-2); }
 .btn-ghost:hover { background: var(--paper-2); color: var(--ink); }
-.btn-sm { padding: 4px 10px; font-size: 0.75rem; }
+.btn-sm     { padding: 4px 10px; font-size: 0.75rem; }
 .btn-danger { background: var(--red-light); color: var(--red); border-color: #fca5a5; }
 .btn-danger:hover { background: #fee2e2; }
 
-/* ============================================================ TABLE */
+/* ── TABLE ───────────────────────────────────────────────── */
 .table-wrap {
-  background: var(--paper-2);
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
-  box-shadow: var(--shadow-sm);
+  background: var(--paper-2); border: 1.5px solid var(--border);
+  border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-sm);
 }
 table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
 thead th {
-  background: var(--paper-3);
-  color: var(--ink-3);
-  font-weight: 600;
-  font-size: 0.70rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  padding: 10px 10px;
-  text-align: left;
-  border-bottom: 1.5px solid var(--border);
-  white-space: nowrap;
+  background: var(--paper-3); color: var(--ink-3); font-weight: 600;
+  font-size: 0.70rem; text-transform: uppercase; letter-spacing: 0.06em;
+  padding: 10px; text-align: left; border-bottom: 1.5px solid var(--border); white-space: nowrap;
 }
 tbody tr { border-bottom: 1px solid var(--border-2); transition: background 0.1s; }
 tbody tr:last-child { border-bottom: none; }
 tbody tr:hover { background: var(--paper); }
 tbody td { padding: 7px 10px; color: var(--ink-2); vertical-align: middle; }
 
-/* Special row types */
-tr.row-carry-over td { background: var(--amber-light); color: var(--amber); font-weight: 600; font-family: 'DM Mono', monospace; }
-tr.row-week1-subtotal td { background: var(--paper-3); color: var(--ink-3); font-style: italic; font-size: 0.78rem; }
-tr.row-period-end td { background: var(--orange-light); color: var(--orange); font-weight: 600; font-family: 'DM Mono', monospace; }
-tr.row-leave td { background: #fefce8; }
-tr.row-holiday td { background: var(--blue-light); color: var(--blue); }
+tr.row-carry-over  td { background: var(--amber-light); color: var(--amber); font-weight: 600; }
+tr.row-week1-sub   td { background: var(--paper-3); color: var(--ink-3); font-style: italic; font-size: 0.78rem; }
+tr.row-period-end  td { background: var(--orange-light); color: var(--orange); font-weight: 600; font-family: 'Lora', serif; font-style: italic; }
+tr.row-leave       td { background: #fefce8; }
+tr.row-holiday     td { background: var(--blue-light); color: var(--blue); }
 
-/* Editable cells */
+/* ── INLINE EDIT ─────────────────────────────────────────── */
 .cell-edit {
-  background: transparent;
-  border: none;
-  font-family: 'DM Mono', monospace;
-  font-size: 0.82rem;
-  color: var(--ink);
-  width: 100%;
-  padding: 2px 4px;
-  border-radius: 4px;
-  outline: none;
-  transition: all 0.1s;
+  background: transparent; border: none;
+  font-family: 'DM Mono', monospace; font-size: 0.82rem;
+  color: var(--ink); width: 100%; padding: 2px 4px;
+  border-radius: 4px; outline: none; transition: all 0.1s;
 }
-.cell-edit:focus {
-  background: white;
-  box-shadow: 0 0 0 2px var(--orange);
-}
-.cell-edit.time-input { width: 58px; text-align: center; }
-.cell-edit.adj-input { width: 60px; text-align: center; }
-.cell-edit.note-input { width: 140px; }
-
+.cell-edit:focus { background: white; box-shadow: 0 0 0 2px var(--orange); }
+.cell-edit.time-input { width: 56px; text-align: center; }
+.cell-edit.adj-input  { width: 58px; text-align: center; }
+.cell-edit.note-input { width: 150px; }
 select.cell-edit {
-  cursor: pointer;
-  appearance: none;
+  cursor: pointer; appearance: none;
   background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236b6157'/%3E%3C/svg%3E") no-repeat right 4px center;
-  padding-right: 18px;
-  width: auto;
+  padding-right: 18px; width: auto;
 }
 
-/* Credit badges */
+/* ── CREDIT BADGES ───────────────────────────────────────── */
 .credit-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 3px;
-  border-radius: 4px;
-  padding: 2px 7px;
-  font-family: 'DM Mono', monospace;
-  font-size: 0.78rem;
-  font-weight: 500;
-  white-space: nowrap;
+  display: inline-flex; align-items: center; gap: 3px;
+  border-radius: 4px; padding: 2px 7px;
+  font-family: 'DM Mono', monospace; font-size: 0.78rem; font-weight: 500; white-space: nowrap;
 }
-.credit-pos { background: var(--green-light); color: var(--green); }
-.credit-neg { background: var(--red-light); color: var(--red); }
-.credit-zero { background: var(--paper-3); color: var(--ink-4); }
+.credit-pos     { background: var(--green-light); color: var(--green); }
+.credit-neg     { background: var(--red-light);   color: var(--red); }
+.credit-zero    { background: var(--paper-3);      color: var(--ink-4); }
 .credit-special { background: var(--orange-light); color: var(--orange); }
+.work-display   { font-family: 'DM Mono', monospace; font-size: 0.80rem; color: var(--ink-3); }
 
-/* Work hour display */
-.work-display {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.80rem;
-  color: var(--ink-3);
-}
-
-/* ============================================================ TEXT MODAL */
+/* ── TEXT MODAL ──────────────────────────────────────────── */
 .modal-overlay {
   position: fixed; inset: 0;
-  background: rgba(26,23,20,0.5);
-  backdrop-filter: blur(4px);
-  z-index: 200;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s;
+  background: rgba(26,23,20,0.5); backdrop-filter: blur(4px);
+  z-index: 200; display: flex; align-items: center; justify-content: center;
+  padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.2s;
 }
 .modal-overlay.open { opacity: 1; pointer-events: all; }
 .modal {
-  background: var(--paper);
-  border: 1.5px solid var(--border);
-  border-radius: 12px;
-  padding: 28px;
-  max-width: 640px;
-  width: 100%;
-  box-shadow: var(--shadow-lg);
-  transform: translateY(8px);
-  transition: transform 0.2s;
+  background: var(--paper); border: 1.5px solid var(--border);
+  border-radius: 12px; padding: 28px; max-width: 640px; width: 100%;
+  box-shadow: var(--shadow-lg); transform: translateY(8px); transition: transform 0.2s;
 }
 .modal-overlay.open .modal { transform: translateY(0); }
-.modal-title {
-  font-family: 'Lora', serif;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--ink);
-  margin-bottom: 6px;
-}
-.modal-sub { font-size: 0.78rem; color: var(--ink-4); margin-bottom: 16px; }
+.modal-title { font-family: 'Lora', serif; font-size: 1.1rem; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+.modal-sub   { font-size: 0.78rem; color: var(--ink-4); margin-bottom: 16px; }
 .text-output {
-  background: var(--paper-3);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 14px;
-  font-family: 'DM Mono', monospace;
-  font-size: 0.78rem;
-  line-height: 1.7;
-  color: var(--ink-2);
-  white-space: pre-wrap;
-  word-break: break-word;
-  min-height: 80px;
-  margin-bottom: 14px;
+  background: var(--paper-3); border: 1px solid var(--border);
+  border-radius: 8px; padding: 14px;
+  font-family: 'DM Mono', monospace; font-size: 0.78rem; line-height: 1.7;
+  color: var(--ink-2); white-space: pre-wrap; word-break: break-word;
+  min-height: 80px; margin-bottom: 14px;
 }
-.copy-success {
-  display: inline-flex; align-items: center; gap: 4px;
-  font-size: 0.75rem; color: var(--green);
-  opacity: 0; transition: opacity 0.3s;
-}
+.copy-success { display: inline-flex; align-items: center; gap: 4px; font-size: 0.75rem; color: var(--green); opacity: 0; transition: opacity 0.3s; }
 .copy-success.show { opacity: 1; }
 
-/* ============================================================ PAST PERIODS */
+/* ── PAST PERIODS ────────────────────────────────────────── */
 .past-period-item {
-  background: var(--paper-2);
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius);
-  margin-bottom: 12px;
-  overflow: hidden;
-  box-shadow: var(--shadow-sm);
+  background: var(--paper-2); border: 1.5px solid var(--border);
+  border-radius: var(--radius); margin-bottom: 12px;
+  overflow: hidden; box-shadow: var(--shadow-sm);
 }
 .past-period-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 18px;
-  cursor: pointer;
-  user-select: none;
-  transition: background 0.1s;
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 18px; cursor: pointer; user-select: none; transition: background 0.1s;
 }
 .past-period-header:hover { background: var(--paper-3); }
-.pp-title {
-  font-family: 'Lora', serif;
-  font-weight: 600;
-  font-size: 0.95rem;
-  flex: 1;
-}
-.pp-pills { display: flex; gap: 6px; flex-wrap: wrap; }
-.pp-pill {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.72rem;
-  background: var(--paper-3);
-  border: 1px solid var(--border-2);
-  border-radius: 4px;
-  padding: 2px 8px;
-  color: var(--ink-3);
-}
+.pp-title  { font-family: 'Lora', serif; font-weight: 600; font-size: 0.95rem; flex: 1; }
+.pp-pills  { display: flex; gap: 6px; flex-wrap: wrap; }
+.pp-pill   { font-family: 'DM Mono', monospace; font-size: 0.72rem; background: var(--paper-3); border: 1px solid var(--border-2); border-radius: 4px; padding: 2px 8px; color: var(--ink-3); }
 .pp-pill.end { background: var(--orange-light); color: var(--orange); border-color: var(--orange-mid); }
-.pp-chevron {
-  color: var(--ink-4);
-  font-size: 0.75rem;
-  transition: transform 0.2s;
-}
+.pp-chevron { color: var(--ink-4); font-size: 0.75rem; transition: transform 0.2s; }
 .past-period-item.expanded .pp-chevron { transform: rotate(180deg); }
-.past-period-body { display: none; border-top: 1px solid var(--border-2); }
+.past-period-body { display: none; border-top: 1px solid var(--border-2); padding: 16px; }
 .past-period-item.expanded .past-period-body { display: block; }
 
-/* ============================================================ LOADING / EMPTY */
-.loading-state {
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 12px; padding: 60px 20px; color: var(--ink-4);
-}
-.spinner {
-  width: 28px; height: 28px;
-  border: 2.5px solid var(--border);
-  border-top-color: var(--orange);
-  border-radius: 50%;
-  animation: spin 0.7s linear infinite;
-}
+/* ── LOADING / EMPTY ─────────────────────────────────────── */
+.loading-state { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 60px 20px; color: var(--ink-4); }
+.spinner { width: 28px; height: 28px; border: 2.5px solid var(--border); border-top-color: var(--orange); border-radius: 50%; animation: spin 0.7s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
-
-.empty-state {
-  text-align: center; padding: 40px 20px; color: var(--ink-4);
-}
+.empty-state { text-align: center; padding: 40px 20px; color: var(--ink-4); }
 .empty-state .icon { font-size: 2rem; margin-bottom: 10px; }
 
-/* ============================================================ NEW PERIOD BANNER */
-.new-period-banner {
-  background: var(--orange-light);
-  border: 1.5px solid var(--orange-mid);
-  border-radius: var(--radius);
-  padding: 14px 18px;
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 0.85rem;
-  color: var(--amber);
-}
-.new-period-banner .icon { font-size: 1.2rem; }
-
-/* ============================================================ TOAST */
+/* ── TOAST ───────────────────────────────────────────────── */
 .toast {
-  position: fixed;
-  bottom: 24px; right: 24px;
-  background: var(--ink);
-  color: white;
-  padding: 10px 18px;
-  border-radius: 8px;
-  font-size: 0.82rem;
-  box-shadow: var(--shadow-lg);
-  z-index: 300;
-  transform: translateY(60px);
-  opacity: 0;
-  transition: all 0.25s;
+  position: fixed; bottom: 24px; right: 24px;
+  background: var(--ink); color: white;
+  padding: 10px 18px; border-radius: 8px; font-size: 0.82rem;
+  box-shadow: var(--shadow-lg); z-index: 300;
+  transform: translateY(60px); opacity: 0; transition: all 0.25s;
 }
 .toast.show { transform: translateY(0); opacity: 1; }
 .toast.success { background: var(--green); }
-.toast.error { background: var(--red); }
+.toast.error   { background: var(--red); }
 
-/* ============================================================ RESPONSIVE */
+/* ── RESPONSIVE ──────────────────────────────────────────── */
 @media (max-width: 700px) {
   .main { padding: 16px 12px 60px; }
-  .header-inner { height: 52px; }
-  .app-logo span { display: none; }
-  .htab { padding: 5px 12px; }
-  thead th:nth-child(n+7) { display: none; }
-  tbody td:nth-child(n+7) { display: none; }
+  thead th:nth-child(n+8), tbody td:nth-child(n+8) { display: none; }
   .summary-card { flex-direction: column; align-items: flex-start; }
-  .spill { min-width: 70px; }
 }
-
-/* ============================================================ ANIMATIONS */
 .fade-in { animation: fadeIn 0.3s ease; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 </style>
@@ -486,7 +270,7 @@ select.cell-edit {
   <div class="header-inner">
     <div class="app-logo">
       <div class="dot"></div>
-      <span>Work Schedule</span>
+      Work Schedule
     </div>
     <div class="header-tabs">
       <button class="htab active" onclick="switchTab('current')">Current Period</button>
@@ -497,14 +281,11 @@ select.cell-edit {
 
 <!-- MAIN -->
 <main class="main">
-  <!-- Current Period Tab -->
   <div id="tab-current">
     <div id="current-content">
       <div class="loading-state"><div class="spinner"></div><span>Loading schedule…</span></div>
     </div>
   </div>
-
-  <!-- Past Periods Tab -->
   <div id="tab-past" style="display:none;">
     <div id="past-content">
       <div class="loading-state"><div class="spinner"></div><span>Loading history…</span></div>
@@ -518,7 +299,7 @@ select.cell-edit {
     <div class="modal-title">Generated Period Text</div>
     <div class="modal-sub" id="modal-period-label"></div>
     <div class="text-output" id="modal-text-output"></div>
-    <div style="display:flex; gap:8px; align-items:center;">
+    <div style="display:flex;gap:8px;align-items:center;">
       <button class="btn btn-primary btn-sm" onclick="copyText()">⎘ Copy to Clipboard</button>
       <button class="btn btn-secondary btn-sm" onclick="closeModal()">Close</button>
       <span class="copy-success" id="copy-success">✓ Copied!</span>
@@ -531,35 +312,36 @@ select.cell-edit {
 
 <script>
 // ============================================================
-// CONFIG — set your deployed GAS Web App URL here
+// CONFIG
 // ============================================================
 const GAS_URL = 'https://script.google.com/macros/s/AKfycby6oET_t3Q_SK2IZl-7Ff9qifb9rVASfZ6i28qdeS74JUKHXjNdaVjrHeTkVGdEpAYE/exec';
 
 // ============================================================
 // STATE
 // ============================================================
-let allPeriods = [];
-let currentPeriod = null;
-let activeTab = 'current';
+let allPeriods     = [];
+let currentPeriod  = null;
+let activeTab      = 'current';
 
 // ============================================================
 // INIT
 // ============================================================
-document.addEventListener('DOMContentLoaded', () => {
-  loadAll();
-});
+document.addEventListener('DOMContentLoaded', loadAll);
 
 async function loadAll() {
   try {
-    const res = await gasPost('getAllPeriods', {});
+    const res  = await gasPost('getAllPeriods', {});
     allPeriods = res.periods || [];
     currentPeriod = allPeriods.length > 0 ? allPeriods[0] : null;
     renderCurrentTab();
     renderPastTab();
   } catch(e) {
-    showToast('Failed to load data: ' + e.message, 'error');
     document.getElementById('current-content').innerHTML =
-      '<div class="empty-state"><div class="icon">⚠️</div><p>Could not connect to Google Apps Script.<br>Check GAS_URL in index.html.</p></div>';
+      `<div class="empty-state">
+        <div class="icon">⚠️</div>
+        <p>Could not connect to Google Apps Script.<br>
+           <small style="color:var(--ink-4);">${e.message}</small></p>
+       </div>`;
   }
 }
 
@@ -568,11 +350,11 @@ async function loadAll() {
 // ============================================================
 function switchTab(tab) {
   activeTab = tab;
-  document.querySelectorAll('.htab').forEach((b,i) => {
-    b.classList.toggle('active', (i===0 && tab==='current') || (i===1 && tab==='past'));
+  document.querySelectorAll('.htab').forEach((b, i) => {
+    b.classList.toggle('active', (i === 0 && tab === 'current') || (i === 1 && tab === 'past'));
   });
   document.getElementById('tab-current').style.display = tab === 'current' ? '' : 'none';
-  document.getElementById('tab-past').style.display = tab === 'past' ? '' : 'none';
+  document.getElementById('tab-past').style.display    = tab === 'past'    ? '' : 'none';
 }
 
 // ============================================================
@@ -595,13 +377,13 @@ function renderCurrentTab() {
 }
 
 function renderPastTab() {
-  const el = document.getElementById('past-content');
-  const past = allPeriods.slice(1); // skip current
+  const el   = document.getElementById('past-content');
+  const past = allPeriods.slice(1);
   if (past.length === 0) {
     el.innerHTML = '<div class="empty-state"><div class="icon">🗂</div><p>No past periods yet.</p></div>';
     return;
   }
-  el.innerHTML = past.map((p, i) => `
+  el.innerHTML = past.map(p => `
     <div class="past-period-item" id="pp-${p.periodId}">
       <div class="past-period-header" onclick="togglePastPeriod('${p.periodId}')">
         <div class="pp-title">${p.label}</div>
@@ -611,147 +393,134 @@ function renderPastTab() {
         </div>
         <span class="pp-chevron">▼</span>
       </div>
-      <div class="past-period-body">
-        ${renderPeriodHTML(p, false)}
-      </div>
-    </div>
-  `).join('');
+      <div class="past-period-body">${renderPeriodHTML(p, false)}</div>
+    </div>`).join('');
 }
 
 function togglePastPeriod(pid) {
-  const el = document.getElementById('pp-' + pid);
-  el.classList.toggle('expanded');
+  document.getElementById('pp-' + pid).classList.toggle('expanded');
 }
 
 // ============================================================
-// RENDER PERIOD (shared for current + past)
+// RENDER PERIOD
 // ============================================================
-function renderPeriodHTML(period, isCurrent) {
+function renderPeriodHTML(period, editable) {
   const summary = `
     <div class="summary-card fade-in">
       <div class="period-title">${period.label}</div>
       <div class="summary-pills">
-        <div class="spill"><span class="spill-label">Carry-over</span><span class="spill-value orange">${period.carryOver}</span></div>
-        ${period.week1End ? `<div class="spill"><span class="spill-label">Wk 1 End</span><span class="spill-value blue">${period.week1End}</span></div>` : ''}
-        <div class="spill"><span class="spill-label">Ending Credit</span><span class="spill-value green">${period.endingCredit}</span></div>
-        <div class="spill"><span class="spill-label">Carries Over</span><span class="spill-value purple">${period.carryOverNext}</span></div>
+        <div class="spill"><span class="spill-label">Carry-over</span>
+          <span class="spill-value orange">${period.carryOver}</span></div>
+        ${period.week1End ? `<div class="spill"><span class="spill-label">Wk 1 End</span>
+          <span class="spill-value blue">${period.week1End}</span></div>` : ''}
+        <div class="spill"><span class="spill-label">Ending Credit</span>
+          <span class="spill-value green">${period.endingCredit}</span></div>
+        <div class="spill"><span class="spill-label">Carries Over</span>
+          <span class="spill-value purple">${period.carryOverNext}</span></div>
       </div>
     </div>`;
 
   const actionBar = `
     <div class="action-bar">
-      ${isCurrent ? `<button class="btn btn-primary btn-sm" onclick="addRowPrompt('${period.periodId}')">+ Add Row</button>` : ''}
+      ${editable ? `<button class="btn btn-primary btn-sm" onclick="addRowPrompt('${period.periodId}')">+ Add Row</button>` : ''}
       <button class="btn btn-secondary btn-sm" onclick="generateText('${period.periodId}')">📋 Generate Text</button>
-      ${isCurrent ? `<button class="btn btn-ghost btn-sm" onclick="createNewPeriod()">⊕ New Period</button>` : ''}
+      ${editable ? `<button class="btn btn-ghost btn-sm" onclick="createNewPeriod()">⊕ New Period</button>` : ''}
     </div>`;
 
-  const tableRows = period.rows.map(row => renderTableRow(row, period.periodId, isCurrent)).join('');
+  const cols = editable ? 11 : 10;
+  const tableRows = (period.rows || []).map(r => renderRow(r, period.periodId, editable, cols)).join('');
 
   const table = `
     <div class="table-wrap fade-in">
       <table>
-        <thead>
-          <tr>
-            <th>Date</th><th>Day</th><th>Type</th>
-            <th>Start</th><th>End</th>
-            <th>Adj</th><th>Work Hr</th><th>Credit</th><th>Net</th>
-            <th>Note</th>
-            ${isCurrent ? '<th></th>' : ''}
-          </tr>
-        </thead>
-        <tbody id="tbody-${period.periodId}">
-          ${tableRows}
-        </tbody>
+        <thead><tr>
+          <th>Date</th><th>Day</th><th>Type</th>
+          <th>Start</th><th>End</th><th>Adj</th>
+          <th>Work Hr</th><th>Credit</th><th>Net</th>
+          <th>Note</th>${editable ? '<th></th>' : ''}
+        </tr></thead>
+        <tbody>${tableRows}</tbody>
       </table>
     </div>`;
 
   return summary + actionBar + table;
 }
 
-function renderTableRow(row, periodId, editable) {
+function renderRow(row, periodId, editable, cols) {
   const rowId = `${periodId}|${row.date}|${row.rowType}`;
 
   if (row.rowType === 'carry_over') {
     return `<tr class="row-carry-over">
       <td colspan="2" style="font-family:'Lora',serif;font-style:italic;">Carry-over</td>
-      <td colspan="7" style="text-align:left;">
-        <span class="credit-badge credit-special">${row.netCredit || row.workHour || '0:00'}</span>
+      <td colspan="${cols - 2}">
+        <span class="credit-badge credit-special">${row.netCredit || '0:00'}</span>
       </td>
       ${editable ? '<td></td>' : ''}
     </tr>`;
   }
 
   if (row.rowType === 'week1_subtotal') {
-    // Re-compute subtotal from state
-    return `<tr class="row-week1-subtotal" id="sub-${periodId}">
-      <td colspan="${editable ? 11 : 10}" style="text-align:right; padding-right:16px;">
-        Week 1 Subtotal — see summary above
+    return `<tr class="row-week1-sub">
+      <td colspan="${cols + (editable ? 1 : 0)}" style="text-align:right;padding-right:16px;">
+        ── Week 1 end ──
       </td>
     </tr>`;
   }
 
   if (row.rowType === 'period_end') {
     return `<tr class="row-period-end">
-      <td colspan="2" style="font-family:'Lora',serif;font-style:italic;">Period End</td>
-      <td colspan="7"></td>
+      <td colspan="2">Period End</td>
+      <td colspan="${cols - 2}"></td>
       ${editable ? '<td></td>' : ''}
     </tr>`;
   }
 
   // Work / Leave row
-  const isLeave = row.rowType === 'leave' || (row.leaveType && row.leaveType !== '');
-  const rowClass = row.leaveType === 'Holiday' ? 'row-holiday' : (isLeave ? 'row-leave' : '');
+  const lt       = row.leaveType || '';
+  const rowClass = lt === 'Holiday' ? 'row-holiday' : (lt !== '' ? 'row-leave' : '');
+  const netMins  = parseTimeMins(row.netCredit);
+  const crMins   = parseTimeMins(row.credit);
+  const creditCls = netMins > 0 ? 'credit-pos' : netMins < 0 ? 'credit-neg' : 'credit-zero';
+  const crCls     = crMins  > 0 ? 'credit-pos' : 'credit-zero';
+  const netPfx    = netMins > 0 ? '+' : '';
 
-  const leaveTypeOptions = ['','Annual Leave','Sick Leave','Credit Hours Taken','Holiday','Other']
-    .map(lt => `<option value="${lt}" ${row.leaveType === lt ? 'selected' : ''}>${lt || '—'}</option>`)
-    .join('');
+  const netBadge = `<span class="credit-badge ${creditCls}">${netPfx}${row.netCredit || '0:00'}</span>`;
+  const crBadge  = `<span class="credit-badge ${crCls}">${crMins > 0 ? '+' : ''}${row.credit || '0:00'}</span>`;
 
-  const netMins = parseTimeMins(row.netCredit);
-  let creditClass = 'credit-zero';
-  if (netMins > 0) creditClass = 'credit-pos';
-  else if (netMins < 0) creditClass = 'credit-neg';
-
-  const netDisplay = netMins !== 0 ? `<span class="credit-badge ${creditClass}">${netMins > 0 ? '+' : ''}${row.netCredit}</span>` :
-    `<span class="credit-badge credit-zero">0:00</span>`;
+  const ltOptions = ['','Annual Leave','Sick Leave','Credit Hours Taken','Holiday','Other']
+    .map(o => `<option value="${o}" ${lt === o ? 'selected' : ''}>${o || '—'}</option>`).join('');
 
   if (editable) {
     return `<tr class="${rowClass}" data-rowid="${rowId}">
-      <td><span style="font-weight:500;">${row.date}</span></td>
+      <td><strong>${row.date}</strong></td>
       <td style="color:var(--ink-4);font-size:0.78rem;">${row.dayLabel}</td>
-      <td>
-        <select class="cell-edit" onchange="updateField('${rowId}','leaveType',this.value,this)" style="font-size:0.75rem;">
-          ${leaveTypeOptions}
-        </select>
-      </td>
-      <td><input class="cell-edit time-input" value="${row.start}" placeholder="5:35"
-          onblur="updateField('${rowId}','start',this.value,this)"></td>
-      <td><input class="cell-edit time-input" value="${row.end}" placeholder="15:05"
-          onblur="updateField('${rowId}','end',this.value,this)"></td>
-      <td><input class="cell-edit adj-input" value="${row.adjustment}" placeholder="±0:00"
-          onblur="updateField('${rowId}','adjustment',this.value,this)"></td>
-      <td><span class="work-display" id="wh-${rowId.replace(/[|:]/g,'_')}">${row.workHour || '—'}</span></td>
-      <td><span class="credit-badge ${row.credit && parseTimeMins(row.credit) > 0 ? 'credit-pos' : 'credit-zero'}"
-              id="cr-${rowId.replace(/[|:]/g,'_')}">${row.credit || '0:00'}</span></td>
-      <td id="nc-${rowId.replace(/[|:]/g,'_')}">${netDisplay}</td>
-      <td><input class="cell-edit note-input" value="${escHtml(row.note)}" placeholder="note…"
-          onblur="updateField('${rowId}','note',this.value,this)"></td>
-      <td>
-        <button class="btn btn-danger btn-sm" onclick="deleteRow('${rowId}')" title="Delete row">✕</button>
-      </td>
+      <td><select class="cell-edit" style="font-size:0.74rem;"
+            onchange="updateField('${rowId}','leaveType',this.value)">${ltOptions}</select></td>
+      <td><input class="cell-edit time-input" value="${esc(row.start)}" placeholder="5:35"
+            onblur="updateField('${rowId}','start',this.value)"></td>
+      <td><input class="cell-edit time-input" value="${esc(row.end)}" placeholder="15:05"
+            onblur="updateField('${rowId}','end',this.value)"></td>
+      <td><input class="cell-edit adj-input" value="${esc(row.adjustment)}" placeholder="±0:00"
+            onblur="updateField('${rowId}','adjustment',this.value)"></td>
+      <td><span class="work-display">${row.workHour || '—'}</span></td>
+      <td>${crBadge}</td>
+      <td>${netBadge}</td>
+      <td><input class="cell-edit note-input" value="${esc(row.note)}" placeholder="note…"
+            onblur="updateField('${rowId}','note',this.value)"></td>
+      <td><button class="btn btn-danger btn-sm" onclick="deleteRow('${rowId}')">✕</button></td>
     </tr>`;
   } else {
-    // Read-only for past periods
     return `<tr class="${rowClass}">
       <td>${row.date}</td>
       <td style="color:var(--ink-4);font-size:0.78rem;">${row.dayLabel}</td>
-      <td style="font-size:0.75rem;color:var(--ink-3);">${row.leaveType || '—'}</td>
+      <td style="font-size:0.74rem;color:var(--ink-3);">${lt || '—'}</td>
       <td style="font-family:'DM Mono',monospace;">${row.start || ''}</td>
       <td style="font-family:'DM Mono',monospace;">${row.end || ''}</td>
       <td style="font-family:'DM Mono',monospace;">${row.adjustment || ''}</td>
       <td><span class="work-display">${row.workHour || '—'}</span></td>
-      <td><span class="credit-badge ${parseTimeMins(row.credit) > 0 ? 'credit-pos' : 'credit-zero'}">${row.credit || '0:00'}</span></td>
-      <td>${netDisplay}</td>
-      <td style="color:var(--ink-3);font-size:0.78rem;">${escHtml(row.note)}</td>
+      <td>${crBadge}</td>
+      <td>${netBadge}</td>
+      <td style="color:var(--ink-3);font-size:0.78rem;">${esc(row.note)}</td>
     </tr>`;
   }
 }
@@ -759,46 +528,33 @@ function renderTableRow(row, periodId, editable) {
 // ============================================================
 // FIELD UPDATE
 // ============================================================
-async function updateField(rowId, field, value, inputEl) {
+async function updateField(rowId, field, value) {
   try {
-    const payload = { rowId, [field]: value };
-    const res = await gasPost('updateRow', payload);
+    const res = await gasPost('updateRow', { rowId, [field]: value });
     if (res.error) { showToast(res.error, 'error'); return; }
-
-    // Refresh data to get recomputed values
-    const refreshRes = await gasPost('getAllPeriods', {});
-    allPeriods = refreshRes.periods || [];
+    const r = await gasPost('getAllPeriods', {});
+    allPeriods    = r.periods || [];
     currentPeriod = allPeriods.length > 0 ? allPeriods[0] : null;
-
-    // Re-render the active tab
     if (activeTab === 'current') renderCurrentTab();
     else renderPastTab();
-
-  } catch(e) {
-    showToast('Update failed: ' + e.message, 'error');
-  }
+  } catch(e) { showToast('Update failed: ' + e.message, 'error'); }
 }
 
 // ============================================================
 // ADD ROW
 // ============================================================
 function addRowPrompt(periodId) {
-  const dateStr = prompt('Enter date (e.g. "May 16"):');
+  const dateStr = prompt('Date (e.g. "May 19"):');
   if (!dateStr) return;
-  const dayStr = prompt('Enter day label (e.g. "Week 1, Mon"):');
+  const dayStr  = prompt('Day label (e.g. "Week 2, Mon"):');
   if (!dayStr) return;
 
   gasPost('addRow', {
     periodId,
     newRow: {
-      date: dateStr.trim(),
-      dayLabel: dayStr.trim(),
-      rowType: 'work',
-      start: '5:35',
-      end: '15:05',
-      leaveType: '',
-      adjustment: '',
-      note: ''
+      date: dateStr.trim(), dayLabel: dayStr.trim(),
+      rowType: 'work', start: '5:35', end: '15:05',
+      leaveType: '', adjustment: '', note: ''
     }
   }).then(res => {
     if (res.error) { showToast(res.error, 'error'); return; }
@@ -822,10 +578,10 @@ async function deleteRow(rowId) {
 // CREATE NEW PERIOD
 // ============================================================
 async function createNewPeriod() {
-  if (!confirm('Create the next pay period? Carry-over will be automatically computed (capped at 24h).')) return;
+  if (!confirm('Create next pay period?\nCarry-over will be auto-computed (capped at 24h).')) return;
   const res = await gasPost('createNewPeriod', {});
   if (res.error) { showToast(res.error, 'error'); return; }
-  showToast('New period created: ' + res.label, 'success');
+  showToast('Created: ' + res.label, 'success');
   loadAll();
 }
 
@@ -835,9 +591,8 @@ async function createNewPeriod() {
 async function generateText(periodId) {
   const res = await gasPost('getPeriodText', { periodId });
   if (res.error) { showToast(res.error, 'error'); return; }
-
   document.getElementById('modal-period-label').textContent = res.periodLabel;
-  document.getElementById('modal-text-output').textContent = res.text;
+  document.getElementById('modal-text-output').textContent  = res.text;
   document.getElementById('copy-success').classList.remove('show');
   document.getElementById('text-modal').classList.add('open');
 }
@@ -851,24 +606,20 @@ function copyText() {
   });
 }
 
-function closeModal() {
-  document.getElementById('text-modal').classList.remove('open');
-}
+function closeModal() { document.getElementById('text-modal').classList.remove('open'); }
 
-// Close modal on overlay click
 document.getElementById('text-modal').addEventListener('click', function(e) {
   if (e.target === this) closeModal();
 });
 
 // ============================================================
-// GAS API
+// GAS API  — note: Content-Type must be text/plain for GAS doPost
 // ============================================================
 async function gasPost(action, payload) {
-  const body = JSON.stringify({ action, payload });
   const res = await fetch(GAS_URL, {
-    method: 'POST',
-    body,
-    headers: { 'Content-Type': 'text/plain' } // GAS requires text/plain for doPost
+    method:  'POST',
+    body:    JSON.stringify({ action, payload }),
+    headers: { 'Content-Type': 'text/plain' }
   });
   if (!res.ok) throw new Error('HTTP ' + res.status);
   return res.json();
@@ -878,8 +629,8 @@ async function gasPost(action, payload) {
 // UTILITIES
 // ============================================================
 function parseTimeMins(str) {
-  if (!str || str.toString().trim() === '') return 0;
-  const s = str.toString().trim();
+  if (!str) return 0;
+  const s   = str.toString().trim();
   const neg = s.startsWith('-');
   const clean = neg ? s.slice(1) : s;
   const parts = clean.split(':');
@@ -888,7 +639,7 @@ function parseTimeMins(str) {
   return neg ? -total : total;
 }
 
-function escHtml(str) {
+function esc(str) {
   if (!str) return '';
   return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
@@ -896,7 +647,7 @@ function escHtml(str) {
 function showToast(msg, type = '') {
   const t = document.getElementById('toast');
   t.textContent = msg;
-  t.className = 'toast show' + (type ? ' ' + type : '');
+  t.className   = 'toast show' + (type ? ' ' + type : '');
   setTimeout(() => t.classList.remove('show'), 2800);
 }
 </script>
