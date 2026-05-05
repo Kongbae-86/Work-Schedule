@@ -107,7 +107,7 @@ tr.row-credit-taken td{background:var(--red-light);}
 /* ── INLINE EDIT ─────────────────────────────────────────── */
 .cell-edit{background:transparent;border:none;font-family:'DM Mono',monospace;font-size:0.82rem;color:var(--ink);padding:2px 4px;border-radius:4px;outline:none;transition:all 0.1s;}
 .cell-edit:focus{background:white;box-shadow:0 0 0 2px var(--orange);}
-.cell-edit.time-input{width:54px;text-align:center;}
+.cell-edit.time-input{width:58px;text-align:center;font-size:0.80rem;}
 .cell-edit.adj-input{width:58px;text-align:center;}
 .cell-edit.note-input{width:160px;}
 select.cell-edit{cursor:pointer;appearance:none;background:transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236b6157'/%3E%3C/svg%3E") no-repeat right 4px center;padding-right:18px;width:auto;font-size:0.74rem;}
@@ -508,17 +508,17 @@ function renderRow(row, periodId, editable) {
   const crCls   = crMins  > 0 ? 'credit-pos' : 'credit-zero';
   const netPfx  = netMins > 0 ? '+' : '';
 
-  const ltOpts = ['','Annual Leave','Sick Leave','Credit Hours Taken','Holiday','Other']
+  const ltOpts = ['','Regular','Annual Leave','Sick Leave','Credit Hours Taken','Holiday','Other']
     .map(o => `<option value="${o}" ${lt===o?'selected':''}>${o||'—'}</option>`).join('');
 
   if (editable) {
     return `<tr class="${rowClass}" data-rowid="${rowId}">
-      <td><strong>${row.date}</strong></td>
-      <td style="color:var(--ink-4);font-size:0.76rem;">${row.dayLabel}</td>
+      <td><strong>${cleanDate(row.date)}</strong></td>
+      <td style="color:var(--ink-4);font-size:0.76rem;">${shortDay(row.dayLabel)}</td>
       <td><select class="cell-edit" onchange="updateField('${rowId}','leaveType',this.value)">${ltOpts}</select></td>
       <td><input class="cell-edit time-input" value="${esc(row.start)}" placeholder="5:35"
             onblur="updateField('${rowId}','start',this.value)"></td>
-      <td><input class="cell-edit time-input" value="${esc(row.end)}" placeholder="15:05"
+      <td><input class="cell-edit time-input" value="${esc(row.end)}" placeholder="15:05" 
             onblur="updateField('${rowId}','end',this.value)"></td>
       <td><input class="cell-edit adj-input" value="${esc(row.adjustment)}" placeholder="±0:00"
             onblur="updateField('${rowId}','adjustment',this.value)"></td>
@@ -531,8 +531,8 @@ function renderRow(row, periodId, editable) {
     </tr>`;
   } else {
     return `<tr class="${rowClass}">
-      <td>${row.date}</td>
-      <td style="color:var(--ink-4);font-size:0.76rem;">${row.dayLabel}</td>
+      <td>${cleanDate(row.date)}</td>
+      <td style="color:var(--ink-4);font-size:0.76rem;">${shortDay(row.dayLabel)}</td>
       <td style="font-size:0.74rem;color:var(--ink-3);">${lt||'—'}</td>
       <td style="font-family:'DM Mono',monospace;">${row.start||''}</td>
       <td style="font-family:'DM Mono',monospace;">${row.end||''}</td>
@@ -685,6 +685,23 @@ async function gasPost(action, payload) {
 // ============================================================
 // UTILITIES
 // ============================================================
+function shortDay(str) {
+  if (!str) return '';
+  // "Week 1, Mon" → "W1, Mon"  or "W1, Mon" → "W1, Mon"
+  return str.replace(/Week\s+(\d)/g, 'W$1');
+}
+
+function cleanDate(str) {
+  if (!str) return '';
+  const s = str.toString().trim();
+  // If it looks like a full Date string e.g. "Fri Nov 20 2026 00:00:00..."
+  // extract just "Nov 20"
+  const m = s.match(/([A-Za-z]+)\s+(\d{1,2})\s+\d{4}/);
+  if (m) return m[1] + ' ' + m[2];
+  // Already clean like "May 4"
+  return s;
+}
+
 function parseTimeMins(str) {
   if (!str) return 0;
   const s   = str.toString().trim();
