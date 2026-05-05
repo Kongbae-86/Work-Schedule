@@ -10,257 +10,180 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-/* ============================================================
-   DESIGN SYSTEM — Warm Paper + Anthropic Orange  (v1.1)
-   ============================================================ */
+/* ── DESIGN SYSTEM ─────────────────────────────────────── */
 :root {
-  --paper:        #faf7f2;
-  --paper-2:      #f5f0e8;
-  --paper-3:      #ede6d8;
-  --paper-4:      #e2d9c8;
-  --ink:          #1a1714;
-  --ink-2:        #3d3730;
-  --ink-3:        #6b6157;
-  --ink-4:        #9e9389;
-  --orange:       #d4570a;
-  --orange-2:     #e8691a;
-  --orange-light: #fde8d8;
-  --orange-mid:   #f5c4a0;
-  --green:        #2d6a4f;
-  --green-light:  #d8f0e5;
-  --red:          #b91c1c;
-  --red-light:    #fde8e8;
-  --blue:         #1d4e89;
-  --blue-light:   #dbeafe;
-  --amber:        #92400e;
-  --amber-light:  #fef3c7;
-  --border:       #d6cdc0;
-  --border-2:     #e8e0d4;
-  --shadow-sm:    0 1px 3px rgba(26,23,20,0.08);
-  --shadow:       0 2px 8px rgba(26,23,20,0.10);
-  --shadow-lg:    0 4px 20px rgba(26,23,20,0.12);
-  --radius:       10px;
-  --radius-sm:    6px;
+  --paper:#faf7f2; --paper-2:#f5f0e8; --paper-3:#ede6d8; --paper-4:#e2d9c8;
+  --ink:#1a1714; --ink-2:#3d3730; --ink-3:#6b6157; --ink-4:#9e9389;
+  --orange:#d4570a; --orange-2:#e8691a; --orange-light:#fde8d8; --orange-mid:#f5c4a0;
+  --green:#2d6a4f; --green-light:#d8f0e5;
+  --red:#b91c1c; --red-light:#fde8e8;
+  --blue:#1d4e89; --blue-light:#dbeafe;
+  --amber:#92400e; --amber-light:#fef3c7;
+  --purple:#7c3aed; --purple-light:#ede9fe;
+  --border:#d6cdc0; --border-2:#e8e0d4;
+  --shadow-sm:0 1px 3px rgba(26,23,20,0.08);
+  --shadow:0 2px 8px rgba(26,23,20,0.10);
+  --shadow-lg:0 4px 20px rgba(26,23,20,0.12);
+  --radius:10px; --radius-sm:6px;
 }
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--paper);
-  color: var(--ink);
-  min-height: 100vh;
-  font-size: 14px;
-  line-height: 1.5;
-}
-body::before {
-  content: '';
-  position: fixed; inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-  pointer-events: none; z-index: 0;
-}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);min-height:100vh;font-size:14px;line-height:1.5;}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:0;}
 
 /* ── HEADER ─────────────────────────────────────────────── */
-.app-header {
-  background: var(--paper-2);
-  border-bottom: 1.5px solid var(--border);
-  padding: 0 20px;
-  position: sticky; top: 0; z-index: 100;
-  box-shadow: var(--shadow-sm);
-}
-.header-inner {
-  max-width: 1100px; margin: 0 auto;
-  display: flex; align-items: center; gap: 16px; height: 56px;
-}
-.app-logo {
-  font-family: 'Lora', serif; font-size: 1.15rem; font-weight: 600;
-  color: var(--ink); letter-spacing: -0.02em;
-  display: flex; align-items: center; gap: 8px;
-}
-.app-logo .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--orange); }
-.header-tabs {
-  display: flex; gap: 2px; margin-left: auto;
-  background: var(--paper-3); border-radius: 8px; padding: 3px;
-}
-.htab {
-  padding: 5px 16px; border-radius: 6px; font-size: 0.82rem; font-weight: 500;
-  cursor: pointer; border: none; background: transparent;
-  color: var(--ink-3); transition: all 0.15s; white-space: nowrap;
-}
-.htab.active { background: var(--paper); color: var(--ink); box-shadow: var(--shadow-sm); }
-.htab:hover:not(.active) { color: var(--ink); background: var(--paper-4); }
+.app-header{background:var(--paper-2);border-bottom:1.5px solid var(--border);padding:0 20px;position:sticky;top:0;z-index:100;box-shadow:var(--shadow-sm);}
+.header-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:16px;height:56px;}
+.app-logo{font-family:'Lora',serif;font-size:1.15rem;font-weight:600;color:var(--ink);letter-spacing:-0.02em;display:flex;align-items:center;gap:8px;}
+.app-logo .dot{width:8px;height:8px;border-radius:50%;background:var(--orange);}
+.header-right{display:flex;align-items:center;gap:10px;margin-left:auto;}
+.header-tabs{display:flex;gap:2px;background:var(--paper-3);border-radius:8px;padding:3px;}
+.htab{padding:5px 16px;border-radius:6px;font-size:0.82rem;font-weight:500;cursor:pointer;border:none;background:transparent;color:var(--ink-3);transition:all 0.15s;white-space:nowrap;}
+.htab.active{background:var(--paper);color:var(--ink);box-shadow:var(--shadow-sm);}
+.htab:hover:not(.active){color:var(--ink);background:var(--paper-4);}
+.btn-settings{background:transparent;border:1px solid var(--border);border-radius:6px;padding:5px 10px;font-size:0.78rem;color:var(--ink-3);cursor:pointer;transition:all 0.15s;}
+.btn-settings:hover{background:var(--paper-3);color:var(--ink);}
 
 /* ── LAYOUT ─────────────────────────────────────────────── */
-.main {
-  max-width: 1100px; margin: 0 auto;
-  padding: 24px 20px 60px; position: relative; z-index: 1;
-}
+.main{max-width:1100px;margin:0 auto;padding:24px 20px 60px;position:relative;z-index:1;}
 
-/* ── SUMMARY CARD ────────────────────────────────────────── */
-.summary-card {
-  background: var(--paper-2); border: 1.5px solid var(--border);
-  border-radius: var(--radius); padding: 18px 20px; margin-bottom: 20px;
-  box-shadow: var(--shadow-sm); display: flex; flex-wrap: wrap;
-  gap: 12px; align-items: center;
-}
-.period-title {
-  font-family: 'Lora', serif; font-size: 1.1rem; font-weight: 600;
-  color: var(--ink); flex: 1; min-width: 180px;
-}
-.summary-pills { display: flex; flex-wrap: wrap; gap: 8px; }
-.spill {
-  display: flex; flex-direction: column; align-items: center;
-  background: var(--paper); border: 1px solid var(--border-2);
-  border-radius: 8px; padding: 6px 12px; min-width: 80px;
-}
-.spill-label { font-size: 0.65rem; color: var(--ink-4); text-transform: uppercase; letter-spacing: 0.05em; }
-.spill-value { font-family: 'DM Mono', monospace; font-size: 0.95rem; font-weight: 500; color: var(--ink); margin-top: 2px; }
-.spill-value.orange { color: var(--orange); }
-.spill-value.green  { color: var(--green); }
-.spill-value.blue   { color: var(--blue); }
-.spill-value.purple { color: #7c3aed; }
+/* ── PERIOD HEADER ───────────────────────────────────────── */
+.period-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.period-title{font-family:'Lora',serif;font-size:1.2rem;font-weight:600;color:var(--ink);}
 
-/* ── BUTTONS ─────────────────────────────────────────────── */
-.action-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; align-items: center; }
-.btn {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 7px 14px; border-radius: var(--radius-sm);
-  font-size: 0.82rem; font-weight: 500; cursor: pointer;
-  border: 1.5px solid transparent; transition: all 0.15s;
-  font-family: 'DM Sans', sans-serif; white-space: nowrap;
-}
-.btn-primary  { background: var(--orange); color: white; border-color: var(--orange); }
-.btn-primary:hover { background: var(--orange-2); border-color: var(--orange-2); }
-.btn-secondary { background: var(--paper); color: var(--ink-2); border-color: var(--border); }
-.btn-secondary:hover { background: var(--paper-3); }
-.btn-ghost  { background: transparent; color: var(--ink-3); border-color: var(--border-2); }
-.btn-ghost:hover { background: var(--paper-2); color: var(--ink); }
-.btn-sm     { padding: 4px 10px; font-size: 0.75rem; }
-.btn-danger { background: var(--red-light); color: var(--red); border-color: #fca5a5; }
-.btn-danger:hover { background: #fee2e2; }
+/* ── THREE CARDS ─────────────────────────────────────────── */
+.cards-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px;}
+.summary-card{border-radius:var(--radius);padding:18px 20px;border:1.5px solid;box-shadow:var(--shadow-sm);transition:all 0.15s;position:relative;}
+.summary-card.clickable{cursor:pointer;}
+.summary-card.clickable:hover{transform:translateY(-2px);box-shadow:var(--shadow);}
+.card-edit-hint{position:absolute;top:10px;right:12px;font-size:0.62rem;opacity:0.45;font-style:italic;}
+.card-label{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;}
+.card-value{font-family:'DM Mono',monospace;font-size:1.9rem;font-weight:500;line-height:1;}
+.card-sub{font-size:0.70rem;margin-top:7px;opacity:0.75;}
+
+.card-carryover{background:var(--amber-light);border-color:#f5d596;}
+.card-carryover .card-label{color:var(--amber);}
+.card-carryover .card-value{color:var(--amber);}
+
+.card-earned{background:var(--green-light);border-color:#86efac;}
+.card-earned .card-label{color:var(--green);}
+.card-earned .card-value{color:var(--green);}
+
+.card-ending{background:var(--purple-light);border-color:#c4b5fd;}
+.card-ending .card-label{color:var(--purple);}
+.card-ending .card-value{color:var(--purple);}
+
+/* ── ACTION BAR ──────────────────────────────────────────── */
+.action-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;align-items:center;}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:var(--radius-sm);font-size:0.82rem;font-weight:500;cursor:pointer;border:1.5px solid transparent;transition:all 0.15s;font-family:'DM Sans',sans-serif;white-space:nowrap;}
+.btn-primary{background:var(--orange);color:white;border-color:var(--orange);}
+.btn-primary:hover{background:var(--orange-2);border-color:var(--orange-2);}
+.btn-secondary{background:var(--paper);color:var(--ink-2);border-color:var(--border);}
+.btn-secondary:hover{background:var(--paper-3);}
+.btn-ghost{background:transparent;color:var(--ink-3);border-color:var(--border-2);}
+.btn-ghost:hover{background:var(--paper-2);color:var(--ink);}
+.btn-sm{padding:4px 10px;font-size:0.75rem;}
+.btn-danger{background:var(--red-light);color:var(--red);border-color:#fca5a5;}
+.btn-danger:hover{background:#fee2e2;}
+.btn-arl{background:var(--orange-light);color:var(--orange);border-color:var(--orange-mid);}
+.btn-arl:hover{background:var(--orange-mid);}
+
+/* ── LEGEND ──────────────────────────────────────────────── */
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:14px;font-size:0.72rem;color:var(--ink-3);}
+.leg-item{display:flex;align-items:center;gap:5px;}
+.leg-dot{width:11px;height:11px;border-radius:2px;}
 
 /* ── TABLE ───────────────────────────────────────────────── */
-.table-wrap {
-  background: var(--paper-2); border: 1.5px solid var(--border);
-  border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-sm);
-}
-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
-thead th {
-  background: var(--paper-3); color: var(--ink-3); font-weight: 600;
-  font-size: 0.70rem; text-transform: uppercase; letter-spacing: 0.06em;
-  padding: 10px; text-align: left; border-bottom: 1.5px solid var(--border); white-space: nowrap;
-}
-tbody tr { border-bottom: 1px solid var(--border-2); transition: background 0.1s; }
-tbody tr:last-child { border-bottom: none; }
-tbody tr:hover { background: var(--paper); }
-tbody td { padding: 7px 10px; color: var(--ink-2); vertical-align: middle; }
-
-tr.row-carry-over  td { background: var(--amber-light); color: var(--amber); font-weight: 600; }
-tr.row-week1-sub   td { background: var(--paper-3); color: var(--ink-3); font-style: italic; font-size: 0.78rem; }
-tr.row-period-end  td { background: var(--orange-light); color: var(--orange); font-weight: 600; font-family: 'Lora', serif; font-style: italic; }
-tr.row-leave       td { background: #fefce8; }
-tr.row-holiday     td { background: var(--blue-light); color: var(--blue); }
+.table-wrap{background:var(--paper-2);border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);}
+table{width:100%;border-collapse:collapse;font-size:0.82rem;}
+thead th{background:var(--paper-3);color:var(--ink-3);font-weight:600;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.06em;padding:10px;text-align:left;border-bottom:1.5px solid var(--border);white-space:nowrap;}
+tbody tr{border-bottom:1px solid var(--border-2);transition:background 0.1s;}
+tbody tr:last-child{border-bottom:none;}
+tbody tr:hover{background:var(--paper);}
+tbody td{padding:7px 10px;color:var(--ink-2);vertical-align:middle;}
+tr.row-leave td{background:#fefce8;}
+tr.row-holiday td{background:var(--blue-light);}
+tr.row-credit-taken td{background:var(--red-light);}
 
 /* ── INLINE EDIT ─────────────────────────────────────────── */
-.cell-edit {
-  background: transparent; border: none;
-  font-family: 'DM Mono', monospace; font-size: 0.82rem;
-  color: var(--ink); width: 100%; padding: 2px 4px;
-  border-radius: 4px; outline: none; transition: all 0.1s;
-}
-.cell-edit:focus { background: white; box-shadow: 0 0 0 2px var(--orange); }
-.cell-edit.time-input { width: 56px; text-align: center; }
-.cell-edit.adj-input  { width: 58px; text-align: center; }
-.cell-edit.note-input { width: 150px; }
-select.cell-edit {
-  cursor: pointer; appearance: none;
-  background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236b6157'/%3E%3C/svg%3E") no-repeat right 4px center;
-  padding-right: 18px; width: auto;
-}
+.cell-edit{background:transparent;border:none;font-family:'DM Mono',monospace;font-size:0.82rem;color:var(--ink);padding:2px 4px;border-radius:4px;outline:none;transition:all 0.1s;}
+.cell-edit:focus{background:white;box-shadow:0 0 0 2px var(--orange);}
+.cell-edit.time-input{width:54px;text-align:center;}
+.cell-edit.adj-input{width:58px;text-align:center;}
+.cell-edit.note-input{width:160px;}
+select.cell-edit{cursor:pointer;appearance:none;background:transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236b6157'/%3E%3C/svg%3E") no-repeat right 4px center;padding-right:18px;width:auto;font-size:0.74rem;}
 
 /* ── CREDIT BADGES ───────────────────────────────────────── */
-.credit-badge {
-  display: inline-flex; align-items: center; gap: 3px;
-  border-radius: 4px; padding: 2px 7px;
-  font-family: 'DM Mono', monospace; font-size: 0.78rem; font-weight: 500; white-space: nowrap;
-}
-.credit-pos     { background: var(--green-light); color: var(--green); }
-.credit-neg     { background: var(--red-light);   color: var(--red); }
-.credit-zero    { background: var(--paper-3);      color: var(--ink-4); }
-.credit-special { background: var(--orange-light); color: var(--orange); }
-.work-display   { font-family: 'DM Mono', monospace; font-size: 0.80rem; color: var(--ink-3); }
+.credit-badge{display:inline-flex;align-items:center;border-radius:4px;padding:2px 7px;font-family:'DM Mono',monospace;font-size:0.76rem;font-weight:500;white-space:nowrap;}
+.credit-pos{background:var(--green-light);color:var(--green);}
+.credit-neg{background:var(--red-light);color:var(--red);}
+.credit-zero{background:var(--paper-3);color:var(--ink-4);}
+.work-display{font-family:'DM Mono',monospace;font-size:0.78rem;color:var(--ink-3);}
 
-/* ── TEXT MODAL ──────────────────────────────────────────── */
-.modal-overlay {
-  position: fixed; inset: 0;
-  background: rgba(26,23,20,0.5); backdrop-filter: blur(4px);
-  z-index: 200; display: flex; align-items: center; justify-content: center;
-  padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.2s;
-}
-.modal-overlay.open { opacity: 1; pointer-events: all; }
-.modal {
-  background: var(--paper); border: 1.5px solid var(--border);
-  border-radius: 12px; padding: 28px; max-width: 640px; width: 100%;
-  box-shadow: var(--shadow-lg); transform: translateY(8px); transition: transform 0.2s;
-}
-.modal-overlay.open .modal { transform: translateY(0); }
-.modal-title { font-family: 'Lora', serif; font-size: 1.1rem; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
-.modal-sub   { font-size: 0.78rem; color: var(--ink-4); margin-bottom: 16px; }
-.text-output {
-  background: var(--paper-3); border: 1px solid var(--border);
-  border-radius: 8px; padding: 14px;
-  font-family: 'DM Mono', monospace; font-size: 0.78rem; line-height: 1.7;
-  color: var(--ink-2); white-space: pre-wrap; word-break: break-word;
-  min-height: 80px; margin-bottom: 14px;
-}
-.copy-success { display: inline-flex; align-items: center; gap: 4px; font-size: 0.75rem; color: var(--green); opacity: 0; transition: opacity 0.3s; }
-.copy-success.show { opacity: 1; }
+/* ── MODALS ──────────────────────────────────────────────── */
+.modal-overlay{position:fixed;inset:0;background:rgba(26,23,20,0.5);backdrop-filter:blur(4px);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity 0.2s;}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal{background:var(--paper);border:1.5px solid var(--border);border-radius:12px;padding:28px;max-width:600px;width:100%;box-shadow:var(--shadow-lg);transform:translateY(8px);transition:transform 0.2s;}
+.modal-overlay.open .modal{transform:translateY(0);}
+.modal-sm{max-width:340px;}
+.modal-title{font-family:'Lora',serif;font-size:1.05rem;font-weight:600;color:var(--ink);margin-bottom:6px;}
+.modal-sub{font-size:0.76rem;color:var(--ink-4);margin-bottom:16px;}
+.text-output{background:var(--paper-3);border:1px solid var(--border);border-radius:8px;padding:14px;font-family:'DM Mono',monospace;font-size:0.76rem;line-height:1.75;color:var(--ink-2);white-space:pre-wrap;word-break:break-all;min-height:80px;margin-bottom:14px;}
+.copy-success{display:inline-flex;align-items:center;gap:4px;font-size:0.74rem;color:var(--green);opacity:0;transition:opacity 0.3s;}
+.copy-success.show{opacity:1;}
+.edit-input{width:100%;font-family:'DM Mono',monospace;font-size:1.5rem;text-align:center;border:2px solid var(--border);border-radius:8px;padding:10px;margin:14px 0;outline:none;background:var(--paper-2);}
+.edit-input:focus{border-color:var(--orange);background:white;}
+.settings-input{width:100%;font-family:'DM Mono',monospace;font-size:0.78rem;border:1.5px solid var(--border);border-radius:6px;padding:8px 10px;margin:10px 0 16px;outline:none;background:var(--paper-2);color:var(--ink);}
+.settings-input:focus{border-color:var(--orange);background:white;}
 
 /* ── PAST PERIODS ────────────────────────────────────────── */
-.past-period-item {
-  background: var(--paper-2); border: 1.5px solid var(--border);
-  border-radius: var(--radius); margin-bottom: 12px;
-  overflow: hidden; box-shadow: var(--shadow-sm);
-}
-.past-period-header {
-  display: flex; align-items: center; gap: 12px;
-  padding: 14px 18px; cursor: pointer; user-select: none; transition: background 0.1s;
-}
-.past-period-header:hover { background: var(--paper-3); }
-.pp-title  { font-family: 'Lora', serif; font-weight: 600; font-size: 0.95rem; flex: 1; }
-.pp-pills  { display: flex; gap: 6px; flex-wrap: wrap; }
-.pp-pill   { font-family: 'DM Mono', monospace; font-size: 0.72rem; background: var(--paper-3); border: 1px solid var(--border-2); border-radius: 4px; padding: 2px 8px; color: var(--ink-3); }
-.pp-pill.end { background: var(--orange-light); color: var(--orange); border-color: var(--orange-mid); }
-.pp-chevron { color: var(--ink-4); font-size: 0.75rem; transition: transform 0.2s; }
-.past-period-item.expanded .pp-chevron { transform: rotate(180deg); }
-.past-period-body { display: none; border-top: 1px solid var(--border-2); padding: 16px; }
-.past-period-item.expanded .past-period-body { display: block; }
+.past-period-item{background:var(--paper-2);border:1.5px solid var(--border);border-radius:var(--radius);margin-bottom:12px;overflow:hidden;box-shadow:var(--shadow-sm);}
+.past-period-header{display:flex;align-items:center;gap:10px;padding:13px 16px;cursor:pointer;user-select:none;transition:background 0.1s;flex-wrap:wrap;}
+.past-period-header:hover{background:var(--paper-3);}
+.pp-title{font-family:'Lora',serif;font-weight:600;font-size:0.92rem;flex:1;min-width:140px;}
+.pp-pills{display:flex;gap:5px;flex-wrap:wrap;}
+.pp-pill{font-family:'DM Mono',monospace;font-size:0.70rem;background:var(--paper-3);border:1px solid var(--border-2);border-radius:4px;padding:2px 7px;color:var(--ink-3);}
+.pp-pill.earned{background:var(--green-light);color:var(--green);border-color:#86efac;}
+.pp-pill.ending{background:var(--purple-light);color:var(--purple);border-color:#c4b5fd;}
+.pp-chevron{color:var(--ink-4);font-size:0.75rem;transition:transform 0.2s;flex-shrink:0;}
+.past-period-item.expanded .pp-chevron{transform:rotate(180deg);}
+.past-period-body{display:none;border-top:1px solid var(--border-2);padding:16px;}
+.past-period-item.expanded .past-period-body{display:block;}
 
 /* ── LOADING / EMPTY ─────────────────────────────────────── */
-.loading-state { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 60px 20px; color: var(--ink-4); }
-.spinner { width: 28px; height: 28px; border: 2.5px solid var(--border); border-top-color: var(--orange); border-radius: 50%; animation: spin 0.7s linear infinite; }
-@keyframes spin { to { transform: rotate(360deg); } }
-.empty-state { text-align: center; padding: 40px 20px; color: var(--ink-4); }
-.empty-state .icon { font-size: 2rem; margin-bottom: 10px; }
+.loading-state{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:60px 20px;color:var(--ink-4);}
+.spinner{width:28px;height:28px;border:2.5px solid var(--border);border-top-color:var(--orange);border-radius:50%;animation:spin 0.7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.empty-state{text-align:center;padding:40px 20px;color:var(--ink-4);}
+.empty-state .icon{font-size:2rem;margin-bottom:10px;}
+
+/* ── SETUP SCREEN ────────────────────────────────────────── */
+.setup-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;padding:40px 20px;text-align:center;}
+.setup-screen .icon{font-size:2.5rem;margin-bottom:16px;}
+.setup-screen h2{font-family:'Lora',serif;font-size:1.3rem;font-weight:600;margin-bottom:8px;}
+.setup-screen p{color:var(--ink-3);font-size:0.85rem;max-width:400px;margin-bottom:20px;}
+.setup-input{font-family:'DM Mono',monospace;font-size:0.78rem;border:1.5px solid var(--border);border-radius:8px;padding:10px 14px;width:100%;max-width:440px;outline:none;background:var(--paper-2);margin-bottom:12px;}
+.setup-input:focus{border-color:var(--orange);background:white;}
+.setup-hint{font-size:0.70rem;color:var(--ink-4);max-width:400px;}
 
 /* ── TOAST ───────────────────────────────────────────────── */
-.toast {
-  position: fixed; bottom: 24px; right: 24px;
-  background: var(--ink); color: white;
-  padding: 10px 18px; border-radius: 8px; font-size: 0.82rem;
-  box-shadow: var(--shadow-lg); z-index: 300;
-  transform: translateY(60px); opacity: 0; transition: all 0.25s;
-}
-.toast.show { transform: translateY(0); opacity: 1; }
-.toast.success { background: var(--green); }
-.toast.error   { background: var(--red); }
+.toast{position:fixed;bottom:24px;right:24px;background:var(--ink);color:white;padding:10px 18px;border-radius:8px;font-size:0.82rem;box-shadow:var(--shadow-lg);z-index:300;transform:translateY(60px);opacity:0;transition:all 0.25s;}
+.toast.show{transform:translateY(0);opacity:1;}
+.toast.success{background:var(--green);}
+.toast.error{background:var(--red);}
+
+/* ── SECTION LABEL ───────────────────────────────────────── */
+.section-label{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--ink-4);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border-2);}
 
 /* ── RESPONSIVE ──────────────────────────────────────────── */
-@media (max-width: 700px) {
-  .main { padding: 16px 12px 60px; }
-  thead th:nth-child(n+8), tbody td:nth-child(n+8) { display: none; }
-  .summary-card { flex-direction: column; align-items: flex-start; }
+@media(max-width:700px){
+  .main{padding:16px 12px 60px;}
+  .cards-row{grid-template-columns:1fr;}
+  thead th:nth-child(n+7),tbody td:nth-child(n+7){display:none;}
+  .past-period-header{flex-direction:column;align-items:flex-start;}
 }
-.fade-in { animation: fadeIn 0.3s ease; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+.fade-in{animation:fadeIn 0.3s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
 </style>
 </head>
 <body>
@@ -268,13 +191,13 @@ select.cell-edit {
 <!-- HEADER -->
 <header class="app-header">
   <div class="header-inner">
-    <div class="app-logo">
-      <div class="dot"></div>
-      Work Schedule
-    </div>
-    <div class="header-tabs">
-      <button class="htab active" onclick="switchTab('current')">Current Period</button>
-      <button class="htab" onclick="switchTab('past')">Past Periods</button>
+    <div class="app-logo"><div class="dot"></div> Work Schedule</div>
+    <div class="header-right">
+      <button class="btn-settings" onclick="openSettings()" title="Settings">⚙ Settings</button>
+      <div class="header-tabs">
+        <button class="htab active" onclick="switchTab('current')">Current Period</button>
+        <button class="htab" onclick="switchTab('past')">Past Periods</button>
+      </div>
     </div>
   </div>
 </header>
@@ -283,26 +206,53 @@ select.cell-edit {
 <main class="main">
   <div id="tab-current">
     <div id="current-content">
-      <div class="loading-state"><div class="spinner"></div><span>Loading schedule…</span></div>
+      <div class="loading-state"><div class="spinner"></div><span>Loading…</span></div>
     </div>
   </div>
   <div id="tab-past" style="display:none;">
     <div id="past-content">
-      <div class="loading-state"><div class="spinner"></div><span>Loading history…</span></div>
+      <div class="loading-state"><div class="spinner"></div><span>Loading…</span></div>
     </div>
   </div>
 </main>
 
-<!-- TEXT MODAL -->
+<!-- CARRY-OVER EDIT MODAL -->
+<div class="modal-overlay" id="carryover-modal">
+  <div class="modal modal-sm">
+    <div class="modal-title">Edit Carry-over</div>
+    <div class="modal-sub">Override the carry-over credit hours (format H:MM, e.g. 12:30)</div>
+    <input class="edit-input" type="text" id="carryover-input" placeholder="0:00">
+    <div style="display:flex;gap:8px;justify-content:flex-end;">
+      <button class="btn btn-secondary btn-sm" onclick="closeCarryOver()">Cancel</button>
+      <button class="btn btn-primary btn-sm" onclick="saveCarryOver()">✓ Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- ARL TEXT MODAL -->
 <div class="modal-overlay" id="text-modal">
   <div class="modal">
-    <div class="modal-title">Generated Period Text</div>
+    <div class="modal-title">📋 ARL-245 Period Text</div>
     <div class="modal-sub" id="modal-period-label"></div>
     <div class="text-output" id="modal-text-output"></div>
     <div style="display:flex;gap:8px;align-items:center;">
       <button class="btn btn-primary btn-sm" onclick="copyText()">⎘ Copy to Clipboard</button>
-      <button class="btn btn-secondary btn-sm" onclick="closeModal()">Close</button>
+      <button class="btn btn-secondary btn-sm" onclick="closeTextModal()">Close</button>
       <span class="copy-success" id="copy-success">✓ Copied!</span>
+    </div>
+  </div>
+</div>
+
+<!-- SETTINGS MODAL -->
+<div class="modal-overlay" id="settings-modal">
+  <div class="modal modal-sm">
+    <div class="modal-title">⚙ Settings</div>
+    <div class="modal-sub">Update your Google Apps Script URL. This is stored locally on your device only.</div>
+    <label style="font-size:0.75rem;color:var(--ink-3);font-weight:600;">GAS Web App URL</label>
+    <input class="settings-input" type="password" id="settings-url-input" placeholder="https://script.google.com/macros/s/…">
+    <div style="display:flex;gap:8px;justify-content:flex-end;">
+      <button class="btn btn-secondary btn-sm" onclick="closeSettings()">Cancel</button>
+      <button class="btn btn-primary btn-sm" onclick="saveSettings()">✓ Save & Reconnect</button>
     </div>
   </div>
 </div>
@@ -312,36 +262,92 @@ select.cell-edit {
 
 <script>
 // ============================================================
-// CONFIG
+// GAS URL — stored in localStorage, never in source code
 // ============================================================
-const GAS_URL = 'https://script.google.com/macros/s/AKfycby6oET_t3Q_SK2IZl-7Ff9qifb9rVASfZ6i28qdeS74JUKHXjNdaVjrHeTkVGdEpAYE/exec';
-
-// ============================================================
-// STATE
-// ============================================================
+let GAS_URL = localStorage.getItem('gasUrl') || '';
+let activePeriodId = null;
 let allPeriods     = [];
-let currentPeriod  = null;
 let activeTab      = 'current';
 
 // ============================================================
 // INIT
 // ============================================================
-document.addEventListener('DOMContentLoaded', loadAll);
+document.addEventListener('DOMContentLoaded', () => {
+  if (!GAS_URL) {
+    showSetupScreen();
+  } else {
+    loadAll();
+  }
+});
 
+function showSetupScreen() {
+  document.getElementById('current-content').innerHTML = `
+    <div class="setup-screen fade-in">
+      <div class="icon">🔑</div>
+      <h2>Connect to Google Sheets</h2>
+      <p>Enter your Google Apps Script Web App URL to get started. It will be stored securely on this device only.</p>
+      <input class="setup-input" type="password" id="setup-url"
+             placeholder="https://script.google.com/macros/s/…"
+             onkeydown="if(event.key==='Enter') saveSetup()">
+      <button class="btn btn-primary" style="margin-top:4px;" onclick="saveSetup()">Connect →</button>
+      <p class="setup-hint" style="margin-top:16px;">
+        Find this URL in Apps Script → Deploy → Manage Deployments
+      </p>
+    </div>`;
+}
+
+function saveSetup() {
+  const val = (document.getElementById('setup-url').value || '').trim();
+  if (!val.startsWith('https://script.google.com')) {
+    showToast('Please enter a valid GAS URL', 'error');
+    return;
+  }
+  GAS_URL = val;
+  localStorage.setItem('gasUrl', GAS_URL);
+  document.getElementById('current-content').innerHTML =
+    '<div class="loading-state"><div class="spinner"></div><span>Connecting…</span></div>';
+  loadAll();
+}
+
+// ============================================================
+// SETTINGS
+// ============================================================
+function openSettings() {
+  document.getElementById('settings-url-input').value = GAS_URL;
+  document.getElementById('settings-modal').classList.add('open');
+}
+function closeSettings() { document.getElementById('settings-modal').classList.remove('open'); }
+function saveSettings() {
+  const val = (document.getElementById('settings-url-input').value || '').trim();
+  if (!val.startsWith('https://script.google.com')) {
+    showToast('Invalid GAS URL', 'error'); return;
+  }
+  GAS_URL = val;
+  localStorage.setItem('gasUrl', GAS_URL);
+  closeSettings();
+  showToast('URL saved — reconnecting…', 'success');
+  loadAll();
+}
+
+// ============================================================
+// DATA LOAD
+// ============================================================
 async function loadAll() {
   try {
     const res  = await gasPost('getAllPeriods', {});
     allPeriods = res.periods || [];
-    currentPeriod = allPeriods.length > 0 ? allPeriods[0] : null;
     renderCurrentTab();
     renderPastTab();
   } catch(e) {
-    document.getElementById('current-content').innerHTML =
-      `<div class="empty-state">
+    document.getElementById('current-content').innerHTML = `
+      <div class="empty-state">
         <div class="icon">⚠️</div>
-        <p>Could not connect to Google Apps Script.<br>
-           <small style="color:var(--ink-4);">${e.message}</small></p>
-       </div>`;
+        <p>Could not connect to Google Apps Script.</p>
+        <p style="font-size:0.75rem;color:var(--ink-4);margin-top:6px;">${e.message}</p>
+        <button class="btn btn-secondary" style="margin-top:14px;" onclick="openSettings()">
+          ⚙ Check Settings
+        </button>
+      </div>`;
   }
 }
 
@@ -350,11 +356,11 @@ async function loadAll() {
 // ============================================================
 function switchTab(tab) {
   activeTab = tab;
-  document.querySelectorAll('.htab').forEach((b, i) => {
-    b.classList.toggle('active', (i === 0 && tab === 'current') || (i === 1 && tab === 'past'));
+  document.querySelectorAll('.htab').forEach((b,i) => {
+    b.classList.toggle('active', (i===0&&tab==='current')||(i===1&&tab==='past'));
   });
-  document.getElementById('tab-current').style.display = tab === 'current' ? '' : 'none';
-  document.getElementById('tab-past').style.display    = tab === 'past'    ? '' : 'none';
+  document.getElementById('tab-current').style.display = tab==='current' ? '' : 'none';
+  document.getElementById('tab-past').style.display    = tab==='past'    ? '' : 'none';
 }
 
 // ============================================================
@@ -362,9 +368,9 @@ function switchTab(tab) {
 // ============================================================
 function renderCurrentTab() {
   const el = document.getElementById('current-content');
-  if (!currentPeriod) {
+  if (!allPeriods || allPeriods.length === 0) {
     el.innerHTML = `
-      <div class="empty-state">
+      <div class="empty-state fade-in">
         <div class="icon">📅</div>
         <p>No pay periods found.</p>
         <button class="btn btn-primary" style="margin-top:14px;" onclick="createNewPeriod()">
@@ -373,7 +379,9 @@ function renderCurrentTab() {
       </div>`;
     return;
   }
-  el.innerHTML = renderPeriodHTML(currentPeriod, true);
+  const period = allPeriods[0];
+  activePeriodId = period.periodId;
+  el.innerHTML = renderPeriodFull(period, true);
 }
 
 function renderPastTab() {
@@ -383,55 +391,97 @@ function renderPastTab() {
     el.innerHTML = '<div class="empty-state"><div class="icon">🗂</div><p>No past periods yet.</p></div>';
     return;
   }
-  el.innerHTML = past.map(p => `
-    <div class="past-period-item" id="pp-${p.periodId}">
-      <div class="past-period-header" onclick="togglePastPeriod('${p.periodId}')">
-        <div class="pp-title">${p.label}</div>
-        <div class="pp-pills">
-          <span class="pp-pill">↩ ${p.carryOver}</span>
-          <span class="pp-pill end">⇢ ${p.endingCredit}</span>
+  el.innerHTML = `<div class="section-label">All Past Periods</div>` +
+    past.map(p => `
+      <div class="past-period-item" id="pp-${p.periodId}">
+        <div class="past-period-header" onclick="togglePast('${p.periodId}')">
+          <div class="pp-title">${p.label}</div>
+          <div class="pp-pills">
+            <span class="pp-pill">↩ ${p.carryOver}</span>
+            <span class="pp-pill earned">⊕ ${p.earned}</span>
+            <span class="pp-pill ending">⇢ ${p.ending}</span>
+          </div>
+          <button class="btn btn-arl btn-sm"
+            onclick="event.stopPropagation();generateText('${p.periodId}')">
+            📋 ARL-245
+          </button>
+          <span class="pp-chevron">▼</span>
         </div>
-        <span class="pp-chevron">▼</span>
-      </div>
-      <div class="past-period-body">${renderPeriodHTML(p, false)}</div>
-    </div>`).join('');
+        <div class="past-period-body" id="ppb-${p.periodId}">
+          ${renderPeriodTable(p, false)}
+        </div>
+      </div>`).join('');
 }
 
-function togglePastPeriod(pid) {
+function togglePast(pid) {
   document.getElementById('pp-' + pid).classList.toggle('expanded');
 }
 
 // ============================================================
-// RENDER PERIOD
+// RENDER PERIOD FULL (current)
 // ============================================================
-function renderPeriodHTML(period, editable) {
-  const summary = `
-    <div class="summary-card fade-in">
+function renderPeriodFull(period, editable) {
+  const carryMins  = parseTimeMins(period.carryOver);
+  const earnedMins = parseTimeMins(period.earned);
+  const endMins    = parseTimeMins(period.ending);
+
+  return `
+    <!-- Period title + new period button -->
+    <div class="period-header fade-in">
       <div class="period-title">${period.label}</div>
-      <div class="summary-pills">
-        <div class="spill"><span class="spill-label">Carry-over</span>
-          <span class="spill-value orange">${period.carryOver}</span></div>
-        ${period.week1End ? `<div class="spill"><span class="spill-label">Wk 1 End</span>
-          <span class="spill-value blue">${period.week1End}</span></div>` : ''}
-        <div class="spill"><span class="spill-label">Ending Credit</span>
-          <span class="spill-value green">${period.endingCredit}</span></div>
-        <div class="spill"><span class="spill-label">Carries Over</span>
-          <span class="spill-value purple">${period.carryOverNext}</span></div>
+      <button class="btn btn-ghost btn-sm" onclick="createNewPeriod()">⊕ New Period</button>
+    </div>
+
+    <!-- Three summary cards -->
+    <div class="cards-row fade-in">
+      <div class="summary-card card-carryover clickable"
+           onclick="openCarryOver('${period.periodId}','${period.carryOver}')"
+           title="Click to edit">
+        <div class="card-edit-hint">✏ click to edit</div>
+        <div class="card-label">↩ Carry-over</div>
+        <div class="card-value" id="card-carryover-val">${period.carryOver}</div>
+        <div class="card-sub">From previous period</div>
       </div>
-    </div>`;
+      <div class="summary-card card-earned">
+        <div class="card-label">⊕ Earned</div>
+        <div class="card-value">${period.earned}</div>
+        <div class="card-sub">Credit earned this period</div>
+      </div>
+      <div class="summary-card card-ending">
+        <div class="card-label">⇢ Ending</div>
+        <div class="card-value">${period.ending}</div>
+        <div class="card-sub">= carry-over + earned · max 24:00</div>
+      </div>
+    </div>
 
-  const actionBar = `
+    <!-- Action bar -->
     <div class="action-bar">
-      ${editable ? `<button class="btn btn-primary btn-sm" onclick="addRowPrompt('${period.periodId}')">+ Add Row</button>` : ''}
-      <button class="btn btn-secondary btn-sm" onclick="generateText('${period.periodId}')">📋 Generate Text</button>
-      ${editable ? `<button class="btn btn-ghost btn-sm" onclick="createNewPeriod()">⊕ New Period</button>` : ''}
-    </div>`;
+      <button class="btn btn-primary btn-sm" onclick="addRowPrompt('${period.periodId}')">+ Add Row</button>
+      <button class="btn btn-arl btn-sm" onclick="generateText('${period.periodId}')">📋 ARL-245 Text</button>
+    </div>
 
-  const cols = editable ? 11 : 10;
-  const tableRows = (period.rows || []).map(r => renderRow(r, period.periodId, editable, cols)).join('');
+    <!-- Legend -->
+    <div class="legend">
+      <div class="leg-item"><div class="leg-dot" style="background:var(--paper-2);border:1px solid var(--border);"></div> Regular work day</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#fefce8;border:1px solid #fde68a;"></div> Leave (no credit impact)</div>
+      <div class="leg-item"><div class="leg-dot" style="background:var(--red-light);border:1px solid #fca5a5;"></div> Credit hours taken</div>
+      <div class="leg-item"><div class="leg-dot" style="background:var(--blue-light);border:1px solid #bfdbfe;"></div> Holiday</div>
+    </div>
 
-  const table = `
-    <div class="table-wrap fade-in">
+    ${renderPeriodTable(period, true)}`;
+}
+
+// ============================================================
+// RENDER TABLE (shared for current + past)
+// ============================================================
+function renderPeriodTable(period, editable) {
+  const rows = (period.rows || [])
+    .filter(r => r.rowType === 'work' || r.rowType === 'leave')
+    .map(r => renderRow(r, period.periodId, editable))
+    .join('');
+
+  return `
+    <div class="table-wrap ${editable ? 'fade-in' : ''}">
       <table>
         <thead><tr>
           <th>Date</th><th>Day</th><th>Type</th>
@@ -439,72 +489,42 @@ function renderPeriodHTML(period, editable) {
           <th>Work Hr</th><th>Credit</th><th>Net</th>
           <th>Note</th>${editable ? '<th></th>' : ''}
         </tr></thead>
-        <tbody>${tableRows}</tbody>
+        <tbody>${rows || '<tr><td colspan="11" style="text-align:center;padding:20px;color:var(--ink-4);">No rows yet</td></tr>'}</tbody>
       </table>
     </div>`;
-
-  return summary + actionBar + table;
 }
 
-function renderRow(row, periodId, editable, cols) {
-  const rowId = `${periodId}|${row.date}|${row.rowType}`;
+function renderRow(row, periodId, editable) {
+  const rowId  = `${periodId}|${row.date}|${row.rowType}`;
+  const lt     = row.leaveType || '';
+  let rowClass = '';
+  if (lt === 'Holiday')           rowClass = 'row-holiday';
+  else if (lt === 'Credit Hours Taken') rowClass = 'row-credit-taken';
+  else if (lt !== '')             rowClass = 'row-leave';
 
-  if (row.rowType === 'carry_over') {
-    return `<tr class="row-carry-over">
-      <td colspan="2" style="font-family:'Lora',serif;font-style:italic;">Carry-over</td>
-      <td colspan="${cols - 2}">
-        <span class="credit-badge credit-special">${row.netCredit || '0:00'}</span>
-      </td>
-      ${editable ? '<td></td>' : ''}
-    </tr>`;
-  }
+  const netMins = parseTimeMins(row.netCredit);
+  const crMins  = parseTimeMins(row.credit);
+  const netCls  = netMins > 0 ? 'credit-pos' : netMins < 0 ? 'credit-neg' : 'credit-zero';
+  const crCls   = crMins  > 0 ? 'credit-pos' : 'credit-zero';
+  const netPfx  = netMins > 0 ? '+' : '';
 
-  if (row.rowType === 'week1_subtotal') {
-    return `<tr class="row-week1-sub">
-      <td colspan="${cols + (editable ? 1 : 0)}" style="text-align:right;padding-right:16px;">
-        ── Week 1 end ──
-      </td>
-    </tr>`;
-  }
-
-  if (row.rowType === 'period_end') {
-    return `<tr class="row-period-end">
-      <td colspan="2">Period End</td>
-      <td colspan="${cols - 2}"></td>
-      ${editable ? '<td></td>' : ''}
-    </tr>`;
-  }
-
-  // Work / Leave row
-  const lt       = row.leaveType || '';
-  const rowClass = lt === 'Holiday' ? 'row-holiday' : (lt !== '' ? 'row-leave' : '');
-  const netMins  = parseTimeMins(row.netCredit);
-  const crMins   = parseTimeMins(row.credit);
-  const creditCls = netMins > 0 ? 'credit-pos' : netMins < 0 ? 'credit-neg' : 'credit-zero';
-  const crCls     = crMins  > 0 ? 'credit-pos' : 'credit-zero';
-  const netPfx    = netMins > 0 ? '+' : '';
-
-  const netBadge = `<span class="credit-badge ${creditCls}">${netPfx}${row.netCredit || '0:00'}</span>`;
-  const crBadge  = `<span class="credit-badge ${crCls}">${crMins > 0 ? '+' : ''}${row.credit || '0:00'}</span>`;
-
-  const ltOptions = ['','Annual Leave','Sick Leave','Credit Hours Taken','Holiday','Other']
-    .map(o => `<option value="${o}" ${lt === o ? 'selected' : ''}>${o || '—'}</option>`).join('');
+  const ltOpts = ['','Annual Leave','Sick Leave','Credit Hours Taken','Holiday','Other']
+    .map(o => `<option value="${o}" ${lt===o?'selected':''}>${o||'—'}</option>`).join('');
 
   if (editable) {
     return `<tr class="${rowClass}" data-rowid="${rowId}">
       <td><strong>${row.date}</strong></td>
-      <td style="color:var(--ink-4);font-size:0.78rem;">${row.dayLabel}</td>
-      <td><select class="cell-edit" style="font-size:0.74rem;"
-            onchange="updateField('${rowId}','leaveType',this.value)">${ltOptions}</select></td>
+      <td style="color:var(--ink-4);font-size:0.76rem;">${row.dayLabel}</td>
+      <td><select class="cell-edit" onchange="updateField('${rowId}','leaveType',this.value)">${ltOpts}</select></td>
       <td><input class="cell-edit time-input" value="${esc(row.start)}" placeholder="5:35"
             onblur="updateField('${rowId}','start',this.value)"></td>
       <td><input class="cell-edit time-input" value="${esc(row.end)}" placeholder="15:05"
             onblur="updateField('${rowId}','end',this.value)"></td>
       <td><input class="cell-edit adj-input" value="${esc(row.adjustment)}" placeholder="±0:00"
             onblur="updateField('${rowId}','adjustment',this.value)"></td>
-      <td><span class="work-display">${row.workHour || '—'}</span></td>
-      <td>${crBadge}</td>
-      <td>${netBadge}</td>
+      <td><span class="work-display">${row.workHour||'—'}</span></td>
+      <td><span class="credit-badge ${crCls}">${crMins>0?'+':''}${row.credit||'0:00'}</span></td>
+      <td><span class="credit-badge ${netCls}">${netPfx}${row.netCredit||'0:00'}</span></td>
       <td><input class="cell-edit note-input" value="${esc(row.note)}" placeholder="note…"
             onblur="updateField('${rowId}','note',this.value)"></td>
       <td><button class="btn btn-danger btn-sm" onclick="deleteRow('${rowId}')">✕</button></td>
@@ -512,64 +532,57 @@ function renderRow(row, periodId, editable, cols) {
   } else {
     return `<tr class="${rowClass}">
       <td>${row.date}</td>
-      <td style="color:var(--ink-4);font-size:0.78rem;">${row.dayLabel}</td>
-      <td style="font-size:0.74rem;color:var(--ink-3);">${lt || '—'}</td>
-      <td style="font-family:'DM Mono',monospace;">${row.start || ''}</td>
-      <td style="font-family:'DM Mono',monospace;">${row.end || ''}</td>
-      <td style="font-family:'DM Mono',monospace;">${row.adjustment || ''}</td>
-      <td><span class="work-display">${row.workHour || '—'}</span></td>
-      <td>${crBadge}</td>
-      <td>${netBadge}</td>
-      <td style="color:var(--ink-3);font-size:0.78rem;">${esc(row.note)}</td>
+      <td style="color:var(--ink-4);font-size:0.76rem;">${row.dayLabel}</td>
+      <td style="font-size:0.74rem;color:var(--ink-3);">${lt||'—'}</td>
+      <td style="font-family:'DM Mono',monospace;">${row.start||''}</td>
+      <td style="font-family:'DM Mono',monospace;">${row.end||''}</td>
+      <td style="font-family:'DM Mono',monospace;">${row.adjustment||''}</td>
+      <td><span class="work-display">${row.workHour||'—'}</span></td>
+      <td><span class="credit-badge ${crCls}">${crMins>0?'+':''}${row.credit||'0:00'}</span></td>
+      <td><span class="credit-badge ${netCls}">${netPfx}${row.netCredit||'0:00'}</span></td>
+      <td style="color:var(--ink-3);font-size:0.76rem;">${esc(row.note)}</td>
     </tr>`;
   }
 }
 
 // ============================================================
-// FIELD UPDATE
+// UPDATE FIELD
 // ============================================================
 async function updateField(rowId, field, value) {
   try {
     const res = await gasPost('updateRow', { rowId, [field]: value });
     if (res.error) { showToast(res.error, 'error'); return; }
     const r = await gasPost('getAllPeriods', {});
-    allPeriods    = r.periods || [];
-    currentPeriod = allPeriods.length > 0 ? allPeriods[0] : null;
+    allPeriods = r.periods || [];
     if (activeTab === 'current') renderCurrentTab();
     else renderPastTab();
   } catch(e) { showToast('Update failed: ' + e.message, 'error'); }
 }
 
 // ============================================================
-// ADD ROW
+// ADD / DELETE ROW
 // ============================================================
 function addRowPrompt(periodId) {
   const dateStr = prompt('Date (e.g. "May 19"):');
   if (!dateStr) return;
   const dayStr  = prompt('Day label (e.g. "Week 2, Mon"):');
-  if (!dayStr) return;
-
+  if (!dayStr)  return;
   gasPost('addRow', {
     periodId,
-    newRow: {
-      date: dateStr.trim(), dayLabel: dayStr.trim(),
-      rowType: 'work', start: '5:35', end: '15:05',
-      leaveType: '', adjustment: '', note: ''
-    }
+    newRow: { date: dateStr.trim(), dayLabel: dayStr.trim(),
+              rowType:'work', start:'5:35', end:'15:05',
+              leaveType:'', adjustment:'', note:'' }
   }).then(res => {
-    if (res.error) { showToast(res.error, 'error'); return; }
-    showToast('Row added', 'success');
+    if (res.error) { showToast(res.error,'error'); return; }
+    showToast('Row added','success');
     loadAll();
   });
 }
 
-// ============================================================
-// DELETE ROW
-// ============================================================
 async function deleteRow(rowId) {
   if (!confirm('Delete this row?')) return;
   const res = await gasPost('deleteRow', { rowId });
-  if (res.error) { showToast(res.error, 'error'); return; }
+  if (res.error) { showToast(res.error,'error'); return; }
   showToast('Row deleted');
   loadAll();
 }
@@ -578,48 +591,92 @@ async function deleteRow(rowId) {
 // CREATE NEW PERIOD
 // ============================================================
 async function createNewPeriod() {
-  if (!confirm('Create next pay period?\nCarry-over will be auto-computed (capped at 24h).')) return;
+  if (!confirm('Create next pay period?\nCarry-over auto-computed from ending credit (capped at 24h).')) return;
   const res = await gasPost('createNewPeriod', {});
-  if (res.error) { showToast(res.error, 'error'); return; }
+  if (res.error) { showToast(res.error,'error'); return; }
   showToast('Created: ' + res.label, 'success');
   loadAll();
 }
 
 // ============================================================
-// GENERATE TEXT
+// CARRY-OVER EDIT
+// ============================================================
+let _editingPeriodId = null;
+function openCarryOver(periodId, currentVal) {
+  _editingPeriodId = periodId;
+  document.getElementById('carryover-input').value = currentVal || '0:00';
+  document.getElementById('carryover-modal').classList.add('open');
+}
+function closeCarryOver() { document.getElementById('carryover-modal').classList.remove('open'); }
+async function saveCarryOver() {
+  const val = document.getElementById('carryover-input').value.trim();
+  if (!val.match(/^\d+:\d{2}$/)) { showToast('Format must be H:MM (e.g. 12:30)','error'); return; }
+  const res = await gasPost('updateCarryOver', { periodId: _editingPeriodId, carryOver: val });
+  if (res.error) { showToast(res.error,'error'); return; }
+  closeCarryOver();
+  showToast('Carry-over updated','success');
+  loadAll();
+}
+
+// ============================================================
+// GENERATE ARL TEXT
 // ============================================================
 async function generateText(periodId) {
   const res = await gasPost('getPeriodText', { periodId });
-  if (res.error) { showToast(res.error, 'error'); return; }
+  if (res.error) { showToast(res.error,'error'); return; }
   document.getElementById('modal-period-label').textContent = res.periodLabel;
   document.getElementById('modal-text-output').textContent  = res.text;
   document.getElementById('copy-success').classList.remove('show');
   document.getElementById('text-modal').classList.add('open');
 }
-
 function copyText() {
-  const text = document.getElementById('modal-text-output').textContent;
-  navigator.clipboard.writeText(text).then(() => {
-    const el = document.getElementById('copy-success');
-    el.classList.add('show');
-    setTimeout(() => el.classList.remove('show'), 2500);
-  });
+  navigator.clipboard.writeText(document.getElementById('modal-text-output').textContent)
+    .then(() => {
+      const el = document.getElementById('copy-success');
+      el.classList.add('show');
+      setTimeout(() => el.classList.remove('show'), 2500);
+    });
+}
+function closeTextModal() { document.getElementById('text-modal').classList.remove('open'); }
+
+// ============================================================
+// SETTINGS MODAL
+// ============================================================
+function openSettings() {
+  document.getElementById('settings-url-input').value = GAS_URL;
+  document.getElementById('settings-modal').classList.add('open');
+}
+function closeSettings() { document.getElementById('settings-modal').classList.remove('open'); }
+function saveSettings() {
+  const val = (document.getElementById('settings-url-input').value || '').trim();
+  if (!val.startsWith('https://script.google.com')) {
+    showToast('Invalid GAS URL','error'); return;
+  }
+  GAS_URL = val;
+  localStorage.setItem('gasUrl', GAS_URL);
+  closeSettings();
+  showToast('Saved — reconnecting…','success');
+  loadAll();
 }
 
-function closeModal() { document.getElementById('text-modal').classList.remove('open'); }
-
-document.getElementById('text-modal').addEventListener('click', function(e) {
-  if (e.target === this) closeModal();
+// ============================================================
+// CLOSE MODALS ON OVERLAY CLICK
+// ============================================================
+['carryover-modal','text-modal','settings-modal'].forEach(id => {
+  document.getElementById(id).addEventListener('click', function(e) {
+    if (e.target === this) this.classList.remove('open');
+  });
 });
 
 // ============================================================
-// GAS API  — note: Content-Type must be text/plain for GAS doPost
+// GAS API
 // ============================================================
 async function gasPost(action, payload) {
+  if (!GAS_URL) throw new Error('GAS URL not configured');
   const res = await fetch(GAS_URL, {
-    method:  'POST',
-    body:    JSON.stringify({ action, payload }),
-    headers: { 'Content-Type': 'text/plain' }
+    method:'POST',
+    body: JSON.stringify({ action, payload }),
+    headers: { 'Content-Type':'text/plain' }
   });
   if (!res.ok) throw new Error('HTTP ' + res.status);
   return res.json();
@@ -635,8 +692,7 @@ function parseTimeMins(str) {
   const clean = neg ? s.slice(1) : s;
   const parts = clean.split(':');
   if (parts.length !== 2) return 0;
-  const total = parseInt(parts[0]) * 60 + parseInt(parts[1]);
-  return neg ? -total : total;
+  return (neg ? -1 : 1) * (parseInt(parts[0]) * 60 + parseInt(parts[1]));
 }
 
 function esc(str) {
@@ -644,10 +700,10 @@ function esc(str) {
   return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-function showToast(msg, type = '') {
+function showToast(msg, type='') {
   const t = document.getElementById('toast');
   t.textContent = msg;
-  t.className   = 'toast show' + (type ? ' ' + type : '');
+  t.className   = 'toast show' + (type ? ' '+type : '');
   setTimeout(() => t.classList.remove('show'), 2800);
 }
 </script>
